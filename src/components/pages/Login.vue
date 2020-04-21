@@ -50,8 +50,8 @@ export default {
       let vm = this;
       const api = "https://vue-course-api.hexschool.io/admin/signin";
       this.$http.post(api, vm.user).then(response => {
-        console.log(response.data);
-        if( response.data.success ) vm.$router.push('/')
+        // console.log(response.data);
+        if( response.data.success ) vm.$router.push('/admin')
       });
     }
   }

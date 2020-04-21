@@ -20,15 +20,12 @@ new Vue({
 });
 
 router.beforeEach((to, from, next) => {
-  console.log("to", to);
-  console.log("from", from);
-  console.log("next", next);
 
+  // 判斷是否需要驗證
   if (to.meta.requiresAuth) {
-    console.log("這裡需要驗證");
     const api = "https://vue-course-api.hexschool.io/api/user/check";
     axios.post(api).then(response => {
-      console.log(response.data);
+      console.log('check', response.data);
       if (response.data.success){
         next();
       }else{
