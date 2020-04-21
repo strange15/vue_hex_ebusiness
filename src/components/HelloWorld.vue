@@ -17,7 +17,7 @@ export default {
       let vm = this;
       const api = "https://vue-course-api.hexschool.io/logout";
       this.$http.post(api).then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         if( response.data.success ) vm.$router.push('/login')
       });
     }
