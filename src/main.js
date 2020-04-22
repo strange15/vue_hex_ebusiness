@@ -23,9 +23,10 @@ router.beforeEach((to, from, next) => {
 
   // 判斷是否需要驗證
   if (to.meta.requiresAuth) {
+    // TODO 把 API 路徑拉出去統一成一個檔案
     const api = "https://vue-course-api.hexschool.io/api/user/check";
     axios.post(api).then(response => {
-      console.log('check', response.data);
+      // console.log('check', response.data);
       if (response.data.success){
         next();
       }else{

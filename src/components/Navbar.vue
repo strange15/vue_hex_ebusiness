@@ -10,9 +10,27 @@
       />
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-          <a class="nav-link" href="#">Sign out</a>
+          <a class="nav-link" href="#" @click="signout">Sign out</a>
         </li>
       </ul>
     </nav>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {};
+  },
+  methods: {
+    signout() {
+      let vm = this;
+      const api = "https://vue-course-api.hexschool.io/logout";
+      this.$http.post(api).then(response => {
+        // console.log(response.data);
+        if (response.data.success) vm.$router.push("/login");
+      });
+    }
+  }
+};
+</script>
