@@ -15,6 +15,11 @@ export default new Router({
     //   component: HelloWorld,
     //   meta: { requiresAuth: true }
     // },
+    // 避免用戶直接進入不存在的頁面
+    {
+      path: '*',
+      redirect: 'login',
+    },
     {
       path: "/login",
       name: "Login",

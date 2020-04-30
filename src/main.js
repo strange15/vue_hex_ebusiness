@@ -3,6 +3,8 @@
 import Vue from "vue";
 import axios from "axios";
 import VueAxios from "vue-axios";
+import 'bootstrap';
+
 import App from "./App";
 import router from "./router";
 
@@ -26,7 +28,7 @@ router.beforeEach((to, from, next) => {
     // TODO 把 API 路徑拉出去統一成一個檔案
     const api = "https://vue-course-api.hexschool.io/api/user/check";
     axios.post(api).then(response => {
-      // console.log('check', response.data);
+      console.log('check', response.data);
       if (response.data.success){
         next();
       }else{
