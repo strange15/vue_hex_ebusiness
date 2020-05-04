@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="text-right mt-4">
-      <button class="btn btn-primary" @click="openModal(true)">建立新的產品</button>
+      <button class="btn btn-primary" @click="openModal(true)">
+        建立新的產品
+      </button>
     </div>
     <table class="table mt-4">
       <thead>
@@ -10,7 +12,7 @@
         <th width="120">原價</th>
         <th width="120">售價</th>
         <td width="100">是否啟用</td>
-        <td width="120">編輯</td>
+        <td width="140">編輯</td>
       </thead>
       <tbody>
         <tr v-for="(item, key) in products">
@@ -23,8 +25,18 @@
             <span v-else>未啟用</span>
           </td>
           <td>
-            <button class="btn btn-outline-primary btn-sm" @click="openModal(false, item)">編輯</button>
-            <button class="btn btn-outline-primary btn-sm" @click="opendelModal(item)">刪除</button>
+            <button
+              class="btn btn-outline-primary btn-sm"
+              @click="openModal(false, item)"
+            >
+              編輯
+            </button>
+            <button
+              class="btn btn-outline-primary btn-sm"
+              @click="opendelModal(item)"
+            >
+              刪除
+            </button>
           </td>
         </tr>
       </tbody>
@@ -58,7 +70,12 @@
             <h5 class="modal-title" id="exampleModalLabel">
               <span>新增產品</span>
             </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -80,7 +97,13 @@
                     或 上傳圖片
                     <i class="fas fa-spinner fa-spin"></i>
                   </label>
-                  <input type="file" id="customFile" class="form-control" ref="files" />
+                  <input
+                    type="file"
+                    id="customFile"
+                    class="form-control"
+                    ref="files"
+                    @change="uploadFile"
+                  />
                 </div>
                 <img
                   img="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=828346ed697837ce808cae68d3ddc3cf&auto=format&fit=crop&w=1350&q=80"
@@ -178,15 +201,29 @@
                       :false-value="0"
                       id="is_enabled"
                     />
-                    <label class="form-check-label" for="is_enabled">是否啟用</label>
+                    <label class="form-check-label" for="is_enabled"
+                      >是否啟用</label
+                    >
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
-            <button type="button" class="btn btn-primary" @click="updateProduct">確認</button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-dismiss="modal"
+            >
+              取消
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              @click="updateProduct"
+            >
+              確認
+            </button>
           </div>
         </div>
       </div>
@@ -205,17 +242,31 @@
             <h5 class="modal-title" id="exampleModalLabel">
               <span>刪除產品</span>
             </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
             是否刪除
-            <strong class="text-danger">{{ tempDelProduct.title }}</strong> 商品(刪除後將無法恢復)。
+            <strong class="text-danger">{{ tempDelProduct.title }}</strong>
+            商品(刪除後將無法恢復)。
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
-            <button type="button" class="btn btn-danger" @click="delProduct">確認刪除</button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-dismiss="modal"
+            >
+              取消
+            </button>
+            <button type="button" class="btn btn-danger" @click="delProduct">
+              確認刪除
+            </button>
           </div>
         </div>
       </div>
@@ -255,7 +306,9 @@ export default {
     },
     updateProduct() {
       const vm = this;
-      let api = vm.isNew ? `${API.UPDATE_PRODUCT}` : `${API.UPDATE_PRODUCT}/${vm.tempProduct.id}`;
+      let api = vm.isNew
+        ? `${API.UPDATE_PRODUCT}`
+        : `${API.UPDATE_PRODUCT}/${vm.tempProduct.id}`;
       let httpMethod = vm.isNew ? "post" : "put";
       this.$http[httpMethod](api, { data: vm.tempProduct }).then(response => {
         $("#productModal").modal("hide");
@@ -267,7 +320,7 @@ export default {
     },
     opendelModal(item) {
       this.tempDelProduct = Object.assign({}, item);
-       $("#delProductModal").modal("show");
+      $("#delProductModal").modal("show");
     },
     delProduct() {
       const vm = this;
@@ -279,6 +332,27 @@ export default {
           console.log("刪除失敗");
         }
       });
+    },
+    uploadFile() {
+      let vm = this;
+      const uploadedFile = this.$refs.files.files[0];
+      const formData = new FormData();
+      formData.append("file-to-upload", uploadedFile);
+      this.$http
+        .post(API.UPLOAD_IMAGE, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        })
+        .then(response => {
+          if(response.data.success) {
+            // 需要雙向綁定
+            vm.$set(vm.tempProduct, 'imageUrl', response.data.imageUrl)
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
   },
   created() {

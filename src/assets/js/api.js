@@ -5,4 +5,5 @@ export const API = {
     LIST_ALL_PRODUCTS: 'https://vue-course-api.hexschool.io/api/strange/admin/products', // 顯示所有產品
     UPDATE_PRODUCT: 'https://vue-course-api.hexschool.io/api/strange/admin/product', // 新增/更新產品
     DELETE_PRODUCT: 'https://vue-course-api.hexschool.io/api/strange/admin/product', // 刪除產品
+    UPLOAD_IMAGE: 'https://vue-course-api.hexschool.io/api/strange/admin/upload', // 上傳圖片
 }
