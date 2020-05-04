@@ -224,7 +224,9 @@
 </template>
 
 <script>
+import { API } from "../../assets/js/api";
 import $ from "jquery";
+
 export default {
   data() {
     return {
@@ -236,11 +238,8 @@ export default {
   },
   methods: {
     getProducts() {
-      const api =
-        "https://vue-course-api.hexschool.io/api/strange/admin/products";
       const vm = this;
-      this.$http.get(api).then(response => {
-        // console.log("getProducts", response.data);
+      this.$http.get(API.LIST_ALL_PRODUCTS).then(response => {
         vm.products = response.data.products;
       });
     },
@@ -256,11 +255,9 @@ export default {
     },
     updateProduct() {
       const vm = this;
-      const apiPath = "https://vue-course-api.hexschool.io/api/strange";
-      let api = vm.isNew ? `${apiPath}/admin/product` : `${apiPath}/admin/product/${vm.tempProduct.id}`;
+      let api = vm.isNew ? `${API.UPDATE_PRODUCT}` : `${API.UPDATE_PRODUCT}/${vm.tempProduct.id}`;
       let httpMethod = vm.isNew ? "post" : "put";
       this.$http[httpMethod](api, { data: vm.tempProduct }).then(response => {
-        // console.log("updateProduct", response.data);
         $("#productModal").modal("hide");
         vm.getProducts();
         if (!response.data.success) {
@@ -274,10 +271,8 @@ export default {
     },
     delProduct() {
       const vm = this;
-      const apiPath = "https://vue-course-api.hexschool.io/api/strange";
-      let api = `${apiPath}/admin/product/${vm.tempDelProduct.id}`;
+      let api = `${API.DELETE_PRODUCT}/${vm.tempDelProduct.id}`;
       this.$http["delete"](api).then(response => {
-        // console.log("delProduct", response.data);
         $("#delProductModal").modal("hide");
         vm.getProducts();
         if (!response.data.success) {

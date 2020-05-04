@@ -26,15 +26,15 @@
           <input type="checkbox" value="remember-me" /> Remember me
         </label>
       </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">
-        Sign in
-      </button>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
       <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
     </form>
   </div>
 </template>
 
 <script>
+import { API } from "../../assets/js/api";
+
 export default {
   name: "HelloWorld",
   data() {
@@ -48,12 +48,15 @@ export default {
   methods: {
     signin() {
       let vm = this;
-      const api = "https://vue-course-api.hexschool.io/admin/signin";
-      this.$http.post(api, vm.user).then(response => {
-        // console.log(response.data);
-        if( response.data.success ) vm.$router.push('/admin/products')
+      // const api = "https://vue-course-api.hexschool.io/admin/signin";
+      this.$http.post(API.LOGIN, vm.user).then(response => {
+        console.log(response.data);
+        if (response.data.success) vm.$router.push("/admin/products");
       });
     }
+  },
+  created() {
+    console.log("API", API);
   }
 };
 </script>

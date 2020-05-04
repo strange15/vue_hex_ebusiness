@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import { API } from "../assets/js/api";
+
 export default {
   data() {
     return {};
@@ -25,9 +27,7 @@ export default {
   methods: {
     signout() {
       let vm = this;
-      const api = "https://vue-course-api.hexschool.io/logout";
-      this.$http.post(api).then(response => {
-        // console.log(response.data);
+      this.$http.post(API.LOGOUT).then(response => {
         if (response.data.success) vm.$router.push("/login");
       });
     }
