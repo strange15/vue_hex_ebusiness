@@ -32,7 +32,8 @@
         </tr>
       </tbody>
     </table>
-    <nav aria-label="Page navigation example">
+    <pagination @getProducts="getProducts"></pagination>
+    <!-- <nav aria-label="Page navigation example">
       <ul class="pagination">
         <li class="page-item" :class="{ 'disabled': !pagination.has_pre }">
           <a
@@ -63,7 +64,7 @@
           </a>
         </li>
       </ul>
-    </nav>
+    </nav> -->
 
     <!-- Modal -->
     <div
@@ -269,6 +270,7 @@
 <script>
 import { API } from "../../assets/js/api";
 import $ from "jquery";
+import Pagination from "../Pagination";
 
 export default {
   data() {
@@ -276,11 +278,11 @@ export default {
       products: [],
       tempProduct: {},
       tempDelProduct: {},
-      pagination: {},
       isNew: false,
       isLoading: false
     };
   },
+  components: {Pagination},
   methods: {
     getProducts(page = 1) {
       const vm = this;
@@ -288,7 +290,8 @@ export default {
       this.$http.get(`${API.LIST_ALL_PRODUCTS}?page=${page}`).then(response => {
         console.log("response", response.data);
         vm.products = response.data.products;
-        vm.pagination = response.data.pagination;
+        // vm.pagination = response.data.pagination;
+        this.$bus.$emit("pagination:set", response.data.pagination);
         vm.isLoading = false;
       });
     },
