@@ -4,12 +4,14 @@ import Vue from "vue";
 import axios from "axios";
 import VueAxios from "vue-axios";
 import 'bootstrap';
-
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 import App from "./App";
 import router from "./router";
 
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
+Vue.component('Loading', Loading);
 
 axios.defaults.withCredentials = true;
 
@@ -28,7 +30,6 @@ router.beforeEach((to, from, next) => {
     // TODO 把 API 路徑拉出去統一成一個檔案
     const api = "https://vue-course-api.hexschool.io/api/user/check";
     axios.post(api).then(response => {
-      console.log('check', response.data);
       if (response.data.success){
         next();
       }else{

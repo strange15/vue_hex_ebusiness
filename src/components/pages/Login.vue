@@ -55,7 +55,6 @@ export default {
     }
   },
   created() {
-    console.log("API", API);
   }
 };
 </script>

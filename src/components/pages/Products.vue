@@ -1,9 +1,10 @@
 <template>
   <div>
+    <div class="vld-parent">
+      <loading :active.sync="isLoading"></loading>
+    </div>
     <div class="text-right mt-4">
-      <button class="btn btn-primary" @click="openModal(true)">
-        建立新的產品
-      </button>
+      <button class="btn btn-primary" @click="openModal(true)">建立新的產品</button>
     </div>
     <table class="table mt-4">
       <thead>
@@ -25,18 +26,8 @@
             <span v-else>未啟用</span>
           </td>
           <td>
-            <button
-              class="btn btn-outline-primary btn-sm"
-              @click="openModal(false, item)"
-            >
-              編輯
-            </button>
-            <button
-              class="btn btn-outline-primary btn-sm"
-              @click="opendelModal(item)"
-            >
-              刪除
-            </button>
+            <button class="btn btn-outline-primary btn-sm" @click="openModal(false, item)">編輯</button>
+            <button class="btn btn-outline-primary btn-sm" @click="opendelModal(item)">刪除</button>
           </td>
         </tr>
       </tbody>
@@ -70,12 +61,7 @@
             <h5 class="modal-title" id="exampleModalLabel">
               <span>新增產品</span>
             </h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -201,29 +187,15 @@
                       :false-value="0"
                       id="is_enabled"
                     />
-                    <label class="form-check-label" for="is_enabled"
-                      >是否啟用</label
-                    >
+                    <label class="form-check-label" for="is_enabled">是否啟用</label>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-outline-secondary"
-              data-dismiss="modal"
-            >
-              取消
-            </button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              @click="updateProduct"
-            >
-              確認
-            </button>
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-primary" @click="updateProduct">確認</button>
           </div>
         </div>
       </div>
@@ -242,12 +214,7 @@
             <h5 class="modal-title" id="exampleModalLabel">
               <span>刪除產品</span>
             </h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -257,16 +224,8 @@
             商品(刪除後將無法恢復)。
           </div>
           <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-outline-secondary"
-              data-dismiss="modal"
-            >
-              取消
-            </button>
-            <button type="button" class="btn btn-danger" @click="delProduct">
-              確認刪除
-            </button>
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-danger" @click="delProduct">確認刪除</button>
           </div>
         </div>
       </div>
@@ -284,14 +243,17 @@ export default {
       products: [],
       tempProduct: {},
       tempDelProduct: {},
-      isNew: false
+      isNew: false,
+      isLoading: false
     };
   },
   methods: {
     getProducts() {
       const vm = this;
+      vm.isLoading = true;
       this.$http.get(API.LIST_ALL_PRODUCTS).then(response => {
         vm.products = response.data.products;
+        vm.isLoading = false;
       });
     },
     openModal(isNew, item) {
@@ -306,6 +268,7 @@ export default {
     },
     updateProduct() {
       const vm = this;
+      vm.isLoading = true;
       let api = vm.isNew
         ? `${API.UPDATE_PRODUCT}`
         : `${API.UPDATE_PRODUCT}/${vm.tempProduct.id}`;
@@ -316,6 +279,7 @@ export default {
         if (!response.data.success) {
           console.log("新增失敗");
         }
+        vm.isLoading = false;
       });
     },
     opendelModal(item) {
@@ -324,6 +288,7 @@ export default {
     },
     delProduct() {
       const vm = this;
+      vm.isLoading = true;
       let api = `${API.DELETE_PRODUCT}/${vm.tempDelProduct.id}`;
       this.$http["delete"](api).then(response => {
         $("#delProductModal").modal("hide");
@@ -331,10 +296,12 @@ export default {
         if (!response.data.success) {
           console.log("刪除失敗");
         }
+        vm.isLoading = false;
       });
     },
     uploadFile() {
       let vm = this;
+      vm.isLoading = true;
       const uploadedFile = this.$refs.files.files[0];
       const formData = new FormData();
       formData.append("file-to-upload", uploadedFile);
@@ -345,13 +312,15 @@ export default {
           }
         })
         .then(response => {
-          if(response.data.success) {
+          if (response.data.success) {
             // 需要雙向綁定
-            vm.$set(vm.tempProduct, 'imageUrl', response.data.imageUrl)
+            vm.$set(vm.tempProduct, "imageUrl", response.data.imageUrl);
           }
+          vm.isLoading = false;
         })
         .catch(function(error) {
           console.log(error);
+          vm.isLoading = false;
         });
     }
   },
