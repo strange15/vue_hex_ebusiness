@@ -16,7 +16,7 @@
         <td width="140">編輯</td>
       </thead>
       <tbody>
-        <tr v-for="(item, key) in products">
+        <tr v-for="(item, key) in products" :key="key">
           <td>{{ item.category }}</td>
           <td>{{ item.title }}</td>
           <td class="text-right">{{ item.origin_price }}</td>
@@ -32,6 +32,39 @@
         </tr>
       </tbody>
     </table>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item" :class="{ 'disabled': !pagination.has_pre }">
+          <a
+            class="page-link"
+            href="#"
+            aria-label="Previous"
+            @click.prevent="getProducts(pagination.current_page-1)"
+          >
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li
+          class="page-item"
+          v-for="page in pagination.total_pages"
+          :key="page"
+          :class="{ 'active': page === pagination.current_page }"
+        >
+          <a class="page-link" href="#" @click.prevent="getProducts(page)">{{ page }}</a>
+        </li>
+        <li class="page-item" :class="{ 'disabled': !pagination.has_next }">
+          <a
+            class="page-link"
+            href="#"
+            aria-label="Next"
+            @click.prevent="getProducts(pagination.current_page+1)"
+          >
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
     <!-- Modal -->
     <div
       class="modal fade"
@@ -243,16 +276,19 @@ export default {
       products: [],
       tempProduct: {},
       tempDelProduct: {},
+      pagination: {},
       isNew: false,
       isLoading: false
     };
   },
   methods: {
-    getProducts() {
+    getProducts(page = 1) {
       const vm = this;
       vm.isLoading = true;
-      this.$http.get(API.LIST_ALL_PRODUCTS).then(response => {
+      this.$http.get(`${API.LIST_ALL_PRODUCTS}?page=${page}`).then(response => {
+        console.log("response", response.data);
         vm.products = response.data.products;
+        vm.pagination = response.data.pagination;
         vm.isLoading = false;
       });
     },
@@ -316,7 +352,7 @@ export default {
             // 需要雙向綁定
             vm.$set(vm.tempProduct, "imageUrl", response.data.imageUrl);
           } else {
-            this.$bus.$emit('message:push', response.data.message, 'danger');
+            this.$bus.$emit("message:push", response.data.message, "danger");
           }
           vm.isLoading = false;
         })
