@@ -315,6 +315,8 @@ export default {
           if (response.data.success) {
             // 需要雙向綁定
             vm.$set(vm.tempProduct, "imageUrl", response.data.imageUrl);
+          } else {
+            this.$bus.$emit('message:push', response.data.message, 'danger');
           }
           vm.isLoading = false;
         })

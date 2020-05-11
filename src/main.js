@@ -6,8 +6,11 @@ import VueAxios from "vue-axios";
 import 'bootstrap';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+
 import App from "./App";
 import router from "./router";
+import './bus';
+import { API } from '../src/assets/js/api';
 
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
@@ -27,9 +30,8 @@ router.beforeEach((to, from, next) => {
 
   // 判斷是否需要驗證
   if (to.meta.requiresAuth) {
-    // TODO 把 API 路徑拉出去統一成一個檔案
-    const api = "https://vue-course-api.hexschool.io/api/user/check";
-    axios.post(api).then(response => {
+    // const api = "https://vue-course-api.hexschool.io/api/user/check";
+    axios.post(API.CHECK_IS_LOGIN).then(response => {
       if (response.data.success){
         next();
       }else{
