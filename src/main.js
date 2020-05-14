@@ -10,11 +10,14 @@ import 'vue-loading-overlay/dist/vue-loading.css';
 import App from "./App";
 import router from "./router";
 import './bus';
-import { API } from '../src/assets/js/api';
+import currencyFilter from './filters/currency';
+import API from '../src/assets/js/api';
 
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
 Vue.component('Loading', Loading);
+Vue.filter('currency', currencyFilter);
+Vue.prototype.API = API;
 
 axios.defaults.withCredentials = true;
 

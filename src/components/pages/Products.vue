@@ -12,15 +12,15 @@
         <th>產品名稱</th>
         <th width="120">原價</th>
         <th width="120">售價</th>
-        <td width="100">是否啟用</td>
-        <td width="140">編輯</td>
+        <th width="100">是否啟用</th>
+        <th width="140">編輯</th>
       </thead>
       <tbody>
         <tr v-for="(item, key) in products" :key="key">
           <td>{{ item.category }}</td>
           <td>{{ item.title }}</td>
-          <td class="text-right">{{ item.origin_price }}</td>
-          <td class="text-right">{{ item.price }}</td>
+          <td class="text-right">{{ item.origin_price | currency }}</td>
+          <td class="text-right">{{ item.price | currency }}</td>
           <td>
             <span v-if="item.is_enabled" class="text-success">啟用</span>
             <span v-else>未啟用</span>
@@ -43,20 +43,6 @@
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
     >
-      <!-- {
-      "data": {
-        "title": "[賣]動物園造型衣服3",
-        "category": "衣服2",
-        "origin_price": 100,
-        "price": 300,
-        "unit": "個",
-        "image": "test.testtest",
-        "description": "Sit down please 名設計師設計",
-        "content": "這是內容",
-        "is_enabled": 1,
-        "imageUrl": <<firebase storage url>>
-      }
-      }-->
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content border-0">
           <div class="modal-header bg-dark text-white">
@@ -236,7 +222,7 @@
 </template>
 
 <script>
-import { API } from "../../assets/js/api";
+// import { API } from "../../assets/js/api";
 import $ from "jquery";
 import Pagination from "../Pagination";
 
@@ -256,7 +242,7 @@ export default {
     getProducts(page = 1) {
       const vm = this;
       vm.isLoading = true;
-      this.$http.get(`${API.LIST_ALL_PRODUCTS}?page=${page}`).then(response => {
+      this.$http.get(`${this.API.LIST_ALL_PRODUCTS}?page=${page}`).then(response => {
         // console.log("response", response.data);
         vm.products = response.data.products;
         vm.pagination = response.data.pagination;
@@ -278,8 +264,8 @@ export default {
       const vm = this;
       vm.isLoading = true;
       let api = vm.isNew
-        ? `${API.UPDATE_PRODUCT}`
-        : `${API.UPDATE_PRODUCT}/${vm.tempProduct.id}`;
+        ? `${this.API.UPDATE_PRODUCT}`
+        : `${this.API.UPDATE_PRODUCT}/${vm.tempProduct.id}`;
       let httpMethod = vm.isNew ? "post" : "put";
       this.$http[httpMethod](api, { data: vm.tempProduct }).then(response => {
         $("#productModal").modal("hide");
@@ -297,7 +283,7 @@ export default {
     delProduct() {
       const vm = this;
       vm.isLoading = true;
-      let api = `${API.DELETE_PRODUCT}/${vm.tempDelProduct.id}`;
+      let api = `${this.API.DELETE_PRODUCT}/${vm.tempDelProduct.id}`;
       this.$http["delete"](api).then(response => {
         $("#delProductModal").modal("hide");
         vm.getProducts();
@@ -314,7 +300,7 @@ export default {
       const formData = new FormData();
       formData.append("file-to-upload", uploadedFile);
       this.$http
-        .post(API.UPLOAD_IMAGE, formData, {
+        .post(this.API.UPLOAD_IMAGE, formData, {
           headers: {
             "Content-Type": "multipart/form-data"
           }

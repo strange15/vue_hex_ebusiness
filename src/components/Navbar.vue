@@ -27,7 +27,7 @@ export default {
   methods: {
     signout() {
       let vm = this;
-      this.$http.post(API.LOGOUT).then(response => {
+      this.$http.post(this.API.LOGOUT).then(response => {
         if (response.data.success) vm.$router.push("/login");
       });
     }

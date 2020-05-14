@@ -1,4 +1,4 @@
-export const API = {
+export default {
     API_DOMAIN: 'https://vue-course-api.hexschool.io/api/strange/', // Strange's API domain 路徑
     LOGIN: 'https://vue-course-api.hexschool.io/admin/signin', // 登入
     LOGOUT: 'https://vue-course-api.hexschool.io/logout', // 登出
