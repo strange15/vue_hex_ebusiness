@@ -15,9 +15,9 @@ import API from '../src/assets/js/api';
 
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
-Vue.component('Loading', Loading);
-Vue.filter('currency', currencyFilter);
-Vue.prototype.API = API;
+Vue.component('Loading', Loading); // 全域註冊 component
+Vue.filter('currency', currencyFilter); // 全域註冊 Filter
+Vue.prototype.API = API; // 全域註冊 export deafult 的 js
 
 axios.defaults.withCredentials = true;
 
