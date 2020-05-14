@@ -32,40 +32,8 @@
         </tr>
       </tbody>
     </table>
-    <pagination @getProducts="getProducts"></pagination>
-    <!-- <nav aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page-item" :class="{ 'disabled': !pagination.has_pre }">
-          <a
-            class="page-link"
-            href="#"
-            aria-label="Previous"
-            @click.prevent="getProducts(pagination.current_page-1)"
-          >
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        <li
-          class="page-item"
-          v-for="page in pagination.total_pages"
-          :key="page"
-          :class="{ 'active': page === pagination.current_page }"
-        >
-          <a class="page-link" href="#" @click.prevent="getProducts(page)">{{ page }}</a>
-        </li>
-        <li class="page-item" :class="{ 'disabled': !pagination.has_next }">
-          <a
-            class="page-link"
-            href="#"
-            aria-label="Next"
-            @click.prevent="getProducts(pagination.current_page+1)"
-          >
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      </ul>
-    </nav> -->
-
+    <pagination :pagination="pagination" @getProducts="getProducts"></pagination>
+    
     <!-- Modal -->
     <div
       class="modal fade"
@@ -279,7 +247,8 @@ export default {
       tempProduct: {},
       tempDelProduct: {},
       isNew: false,
-      isLoading: false
+      isLoading: false,
+      pagination: {},
     };
   },
   components: {Pagination},
@@ -288,10 +257,10 @@ export default {
       const vm = this;
       vm.isLoading = true;
       this.$http.get(`${API.LIST_ALL_PRODUCTS}?page=${page}`).then(response => {
-        console.log("response", response.data);
+        // console.log("response", response.data);
         vm.products = response.data.products;
-        // vm.pagination = response.data.pagination;
-        this.$bus.$emit("pagination:set", response.data.pagination);
+        vm.pagination = response.data.pagination;
+        // this.$bus.$emit("pagination:set", response.data.pagination); // 用 event bus 傳值
         vm.isLoading = false;
       });
     },

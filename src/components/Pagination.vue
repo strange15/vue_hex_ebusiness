@@ -36,9 +36,15 @@
 <script>
 export default {
   name: "Pagination",
+   props: {
+    pagination: {
+      type: Object,
+      default: {}
+    }
+  },
   data() {
     return {
-      pagination: {}
+      // pagination: {}
     };
   },
   methods: {
@@ -48,9 +54,9 @@ export default {
   },
   created() {
     const vm = this;
-    vm.$bus.$on("pagination:set", pagination => {
-      vm.pagination = pagination;
-    });
+    // vm.$bus.$on("pagination:set", pagination => {
+    //   vm.pagination = pagination;
+    // });
   }
 };
 </script>
