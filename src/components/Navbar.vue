@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="vld-parent">
+      <loading :active.sync="isLoading"></loading>
+    </div>
     <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
       <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Company name</a>
       <input
@@ -22,13 +25,17 @@ import { API } from "../assets/js/api";
 
 export default {
   data() {
-    return {};
+    return {
+      isLoading: false
+    };
   },
   methods: {
     signout() {
       let vm = this;
+      vm.isLoading = true;
       this.$http.post(this.API.LOGOUT).then(response => {
         if (response.data.success) vm.$router.push("/login");
+        vm.isLoading = false;
       });
     }
   }

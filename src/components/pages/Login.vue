@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="vld-parent">
+      <loading :active.sync="isLoading"></loading>
+    </div>
     <form class="form-signin" @submit.prevent="signin">
       <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
       <label for="inputEmail" class="sr-only">Email address</label>
@@ -42,15 +45,18 @@ export default {
       user: {
         username: "",
         password: ""
-      }
+      },
+      isLoading: false,
     };
   },
   methods: {
     signin() {
       let vm = this;
+      vm.isLoading = true;
       // const api = "https://vue-course-api.hexschool.io/admin/signin";
       this.$http.post(this.API.LOGIN, vm.user).then(response => {
         if (response.data.success) vm.$router.push("/admin/products");
+        vm.isLoading = false;
       });
     }
   },
