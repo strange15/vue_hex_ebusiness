@@ -36,8 +36,6 @@
 </template>
 
 <script>
-import { API } from "../../assets/js/api";
-
 export default {
   name: "HelloWorld",
   data() {
