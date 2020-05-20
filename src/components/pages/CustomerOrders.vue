@@ -48,13 +48,12 @@ export default {
     };
   },
   methods: {
-    getProducts(page = 1) {
+    getProducts() {
       const vm = this;
       vm.isLoading = true;
       this.$http
         .get(`${this.API.LIST_ALL_PRODUCTS_NOT_ADMIN}`)
         .then(response => {
-          console.log("response", response.data);
           vm.products = response.data.products;
           vm.isLoading = false;
         });
