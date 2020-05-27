@@ -69,7 +69,7 @@
                 <div class="form-group">
                   <label for="customFile">
                     或 上傳圖片
-                    <i class="fas fa-spinner fa-spin"></i>
+                    <i class="fas fa-spinner fa-spin" v-if="status.itemLoading"></i>
                   </label>
                   <input
                     type="file"
@@ -234,6 +234,9 @@ export default {
       tempDelProduct: {},
       isNew: false,
       isLoading: false,
+      status: {
+        itemLoading: false
+      },
       pagination: {},
     };
   },
@@ -243,7 +246,6 @@ export default {
       const vm = this;
       vm.isLoading = true;
       this.$http.get(`${this.API.LIST_ALL_PRODUCTS}?page=${page}`).then(response => {
-        // console.log("response", response.data);
         vm.products = response.data.products;
         vm.pagination = response.data.pagination;
         // this.$bus.$emit("pagination:set", response.data.pagination); // 用 event bus 傳值
@@ -295,7 +297,7 @@ export default {
     },
     uploadFile() {
       let vm = this;
-      vm.isLoading = true;
+      vm.status.itemLoading = true;
       const uploadedFile = this.$refs.files.files[0];
       const formData = new FormData();
       formData.append("file-to-upload", uploadedFile);
@@ -312,11 +314,11 @@ export default {
           } else {
             this.$bus.$emit("message:push", response.data.message, "danger");
           }
-          vm.isLoading = false;
+          vm.status.itemLoading = false;
         })
         .catch(function(error) {
           console.log(error);
-          vm.isLoading = false;
+          vm.status.itemLoading = false;
         });
     }
   },
