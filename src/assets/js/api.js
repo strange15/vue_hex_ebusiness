@@ -9,4 +9,6 @@ export default {
     UPLOAD_IMAGE: 'https://vue-course-api.hexschool.io/api/strange/admin/upload', // 上傳圖片
     LIST_ALL_PRODUCTS_NOT_ADMIN: 'https://vue-course-api.hexschool.io/api/strange/products', // 顯示所有產品(免驗證)
     LIST_PRODUCT_NOT_ADMIN: 'https://vue-course-api.hexschool.io/api/strange/product', // 顯示單一產品(免驗證)
+    ADD_TO_CART: 'https://vue-course-api.hexschool.io/api/strange/cart', // 加入購物車
+    LIST_CART: 'https://vue-course-api.hexschool.io/api/strange/cart', // 加入購物車
 }

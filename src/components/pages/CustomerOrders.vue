@@ -42,7 +42,11 @@
               ></i>
               查看更多
             </button>
-            <button type="button" class="btn btn-outline-danger btn-sm ml-auto">
+            <button
+              type="button"
+              class="btn btn-outline-danger btn-sm ml-auto"
+              @click="addToCart(item.id)"
+            >
               <i
                 class="fas fa-spinner fa-spin"
                 v-if="status.itemLoading === item.id"
@@ -53,6 +57,55 @@
         </div>
       </div>
     </div>
+
+    <!-- 購物車列表 -->
+    <div class="cart-list">
+      <table class="table">
+        <thead>
+          <th></th>
+          <th>品名</th>
+          <th>數量</th>
+          <th>單價</th>
+        </thead>
+        <tbody>
+          <tr v-for="item in cart.carts">
+            <td class="align-middle">
+              <button type="button" class="btn btn-outline-danger btn-sm">
+                <i class="far fa-trash-alt"></i>
+              </button>
+            </td>
+            <td class="align-middle">
+              {{ item.product.title }}
+              <!-- <div class="text-success" v-if="item.coupon">
+            已套用優惠券
+          </div> -->
+            </td>
+            <td class="align-middle">{{ item.qty }}/{{ item.product.unit }}</td>
+            <td class="align-middle text-right">{{ item.final_total }}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="3" class="text-right">總計</td>
+            <td class="text-right">{{ cart.total }}</td>
+          </tr>
+          <tr>
+            <td colspan="3" class="text-right text-success">折扣價</td>
+            <td class="text-right text-success">{{ cart.final_total }}</td>
+          </tr>
+        </tfoot>
+      </table>
+      <div class="input-group mb-3 input-group-sm">
+        <input type="text" class="form-control" placeholder="請輸入優惠碼" />
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button">
+            套用優惠碼
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 單一商品(查看更多) modal -->
     <div
       class="modal fade"
       id="productModal"
@@ -77,13 +130,15 @@
             </button>
           </div>
           <div class="modal-body">
-            <img :src="product.imageUrl" class="img-fluid" alt="">
+            <img :src="product.imageUrl" class="img-fluid" alt="" />
             <blockquote class="blockqoute mt-3">
-               <p class="mb-0">{{ product.content }}</p>
-               <footer class="blockqoute-footer text-right">{{ product.description }}</footer>
+              <p class="mb-0">{{ product.content }}</p>
+              <footer class="blockqoute-footer text-right">
+                {{ product.description }}
+              </footer>
             </blockquote>
             <div class="d-flex justify-content-between align-items-baseline">
-               <div class="h4" v-if="!product.price">
+              <div class="h4" v-if="!product.price">
                 原價 {{ product.origin_price }} 元
               </div>
               <del class="h6" v-if="product.price"
@@ -95,14 +150,19 @@
             </div>
           </div>
           <select name="" class="form-control mt-3" v-model="product.num">
-             <!-- TODO -->
-             <option value="1">選購1件</option>
+            <option :value="num" v-for="num in 10"
+              >選購 {{ num }} {{ product.unit }}</option
+            >
           </select>
           <div class="modal-footer">
             <div class="text-muted text-nowrap mr-3">
-               小計 <strong>{{ product.num * product.price }}</strong>
+              小計 <strong>{{ product.num * product.price }}</strong>
             </div>
-            <button type="button" class="btn btn-primary">
+            <button
+              type="button"
+              class="btn btn-primary"
+              @click="addToCart(product.id, product.num)"
+            >
               加到購物車
             </button>
           </div>
@@ -121,6 +181,7 @@ export default {
       isLoading: false,
       products: [],
       product: [],
+      cart: [],
       status: {
         itemLoading: ""
       }
@@ -140,17 +201,48 @@ export default {
     getProduct(id) {
       const vm = this;
       vm.status.itemLoading = id;
-      this.$http.get(`${this.API.LIST_PRODUCT_NOT_ADMIN}/${id}`).then(response => {
-        vm.product = response.data.product;
-        $('#productModal').modal('show');
-        vm.status.itemLoading = "";
+      this.$http
+        .get(`${this.API.LIST_PRODUCT_NOT_ADMIN}/${id}`)
+        .then(response => {
+          vm.product = response.data.product;
+          $("#productModal").modal("show");
+          vm.status.itemLoading = "";
+        });
+    },
+    addToCart(id, qty = 1) {
+      const vm = this;
+      vm.status.itemLoading = id;
+      const cart = {
+        product_id: id,
+        qty
+      };
+      this.$http
+        .post(`${this.API.ADD_TO_CART}`, { data: cart })
+        .then(response => {
+          vm.getCart();
+          $("#productModal").modal("hide");
+          vm.status.itemLoading = "";
+        });
+    },
+    getCart() {
+      const vm = this;
+      vm.isLoading = true;
+      this.$http.get(`${this.API.LIST_CART}`).then(response => {
+        vm.cart = response.data.data;
+        vm.isLoading = false;
       });
     }
   },
   created() {
     this.getProducts();
+    this.getCart();
   }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.cart-list {
+  width: 50%;
+  margin: 0 auto;
+}
+</style>
