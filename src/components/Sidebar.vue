@@ -19,10 +19,10 @@
             <router-link class="nav-link" to="/admin/products"
               ><i class="fas fa-box-open mr-1"></i>產品列表</router-link
             >
-            <router-link class="nav-link" to="/admin/products"
+            <router-link class="nav-link" to="/admin/orders"
               ><i class="far fa-list-alt mr-1"></i>訂單列表</router-link
             >
-            <router-link class="nav-link" to="/admin/products"
+            <router-link class="nav-link" to="/admin/coupons"
               ><i class="fas fa-ticket-alt mr-1"></i>優惠券</router-link
             >
           </li>

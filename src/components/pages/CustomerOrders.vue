@@ -70,7 +70,8 @@
         <tbody>
           <tr v-for="item in cart.carts">
             <td class="align-middle">
-              <button type="button" class="btn btn-outline-danger btn-sm">
+              <button type="button" class="btn btn-outline-danger btn-sm"
+              @click="delFromCart(item.id)">
                 <i class="far fa-trash-alt"></i>
               </button>
             </td>
@@ -223,6 +224,18 @@ export default {
           $("#productModal").modal("hide");
           vm.status.itemLoading = "";
         });
+    },
+    delFromCart(id) {
+      const vm = this;
+      vm.isLoading = true;
+      let api = `${this.API.DELETE_FROM_CART}/${id}`;
+      this.$http["delete"](api).then(response => {
+        if (!response.data.success) {
+          console.log("刪除失敗");
+        }
+        vm.getCart();
+        vm.isLoading = false;
+      });
     },
     getCart() {
       const vm = this;
