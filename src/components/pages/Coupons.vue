@@ -20,8 +20,7 @@
         <tr v-for="(item, key) in coupons" :key="key">
           <td>{{ item.title }}</td>
           <td>{{ item.percent }}%</td>
-          <td>{{ item.due_date }}</td>
-          <!-- TODO -->
+          <td>{{ $moment(item.due_date).format("YYYY/MM/DD") }}</td>
           <td>
             <span v-if="item.is_enabled" class="text-success">啟用</span>
             <span v-else>未啟用</span>
@@ -94,6 +93,7 @@
                 </div>
                 <div class="form-group">
                   <label for="due_date">到期日</label>
+                  <!-- TODO tempCoupon.due_date 轉為 YYYY/MM/DD 正常顯示 -->
                   <input
                     type="date"
                     class="form-control"
@@ -209,6 +209,7 @@ export default {
         .get(`${this.API.LIST_ALL_COUPONS}?page=${page}`)
         .then(response => {
           vm.coupons = response.data.coupons;
+          console.log('vm.coupons', vm.coupons);
           vm.pagination = response.data.pagination;
           vm.isLoading = false;
         });
@@ -227,9 +228,11 @@ export default {
       const vm = this;
       vm.isLoading = true;
       let api = vm.isNew
-        ? `${this.API.UPDATE_COUPONS}`
-        : `${this.API.UPDATE_COUPONS}/${vm.tempCoupon.id}`;
+        ? `${this.API.UPDATE_COUPON}`
+        : `${this.API.UPDATE_COUPON}/${vm.tempCoupon.id}`;
       let httpMethod = vm.isNew ? "post" : "put";
+      let dateTimestamp = this.$moment(vm.tempCoupon.due_date).valueOf();
+      vm.tempCoupon.due_date = dateTimestamp;
       this.$http[httpMethod](api, { data: vm.tempCoupon }).then(response => {
         $("#couponModal").modal("hide");
         vm.getCoupons();
@@ -246,7 +249,7 @@ export default {
     delCoupon() {
       const vm = this;
       vm.isLoading = true;
-      let api = `${this.API.DELETE_COUPONS}/${vm.tempDelCoupon.id}`;
+      let api = `${this.API.DELETE_COUPON}/${vm.tempDelCoupon.id}`;
       this.$http["delete"](api).then(response => {
         $("#delCouponModal").modal("hide");
         vm.getCoupons();
@@ -255,10 +258,11 @@ export default {
         }
         vm.isLoading = false;
       });
-    },
+    }
   },
   created() {
     this.getCoupons();
+    // console.log('test', this.$moment("2020-06-01").valueOf());
   }
 };
 </script>

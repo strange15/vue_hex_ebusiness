@@ -6,6 +6,7 @@ import VueAxios from "vue-axios";
 import 'bootstrap';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import moment from 'moment';
 
 import App from "./App";
 import router from "./router";
@@ -18,6 +19,7 @@ Vue.use(VueAxios, axios);
 Vue.component('Loading', Loading); // 全域註冊 component
 Vue.filter('currency', currencyFilter); // 全域註冊 Filter
 Vue.prototype.API = API; // 全域註冊 export deafult 的 js
+Vue.prototype.$moment = moment; //全域註冊 moment
 
 axios.defaults.withCredentials = true;
 

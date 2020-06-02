@@ -51,3 +51,8 @@
     </nav>
   </div>
 </template>
+<style scoped>
+.router-link-active {
+  color: rgb(204, 0, 136);
+}
+</style>

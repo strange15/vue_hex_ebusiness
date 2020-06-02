@@ -70,16 +70,19 @@
         <tbody>
           <tr v-for="item in cart.carts">
             <td class="align-middle">
-              <button type="button" class="btn btn-outline-danger btn-sm"
-              @click="delFromCart(item.id)">
+              <button
+                type="button"
+                class="btn btn-outline-danger btn-sm"
+                @click="delFromCart(item.id)"
+              >
                 <i class="far fa-trash-alt"></i>
               </button>
             </td>
             <td class="align-middle">
               {{ item.product.title }}
-              <!-- <div class="text-success" v-if="item.coupon">
-            已套用優惠券
-          </div> -->
+              <div class="text-success" v-if="item.coupon">
+                已套用優惠券
+              </div>
             </td>
             <td class="align-middle">{{ item.qty }}/{{ item.product.unit }}</td>
             <td class="align-middle text-right">{{ item.final_total }}</td>
@@ -90,16 +93,25 @@
             <td colspan="3" class="text-right">總計</td>
             <td class="text-right">{{ cart.total }}</td>
           </tr>
-          <tr>
+          <tr v-if="cart.tota !== cart.final_total">
             <td colspan="3" class="text-right text-success">折扣價</td>
             <td class="text-right text-success">{{ cart.final_total }}</td>
           </tr>
         </tfoot>
       </table>
       <div class="input-group mb-3 input-group-sm">
-        <input type="text" class="form-control" placeholder="請輸入優惠碼" />
+        <input
+          type="text"
+          class="form-control"
+          v-model="couponCode"
+          placeholder="請輸入優惠碼"
+        />
         <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button">
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
+            @click="useCoupon()"
+          >
             套用優惠碼
           </button>
         </div>
@@ -185,7 +197,8 @@ export default {
       cart: [],
       status: {
         itemLoading: ""
-      }
+      },
+      couponCode: ""
     };
   },
   methods: {
@@ -244,6 +257,23 @@ export default {
         vm.cart = response.data.data;
         vm.isLoading = false;
       });
+    },
+    useCoupon() {
+      const vm = this;
+      vm.isLoading = true;
+      let code = {
+        code: vm.couponCode
+      };
+      this.$http
+        .post(`${this.API.USE_COUPON}`, { data: code })
+        .then(response => {
+          console.log("useCoupon", response);
+          if (!response.data.success) {
+            console.log("套用失敗"); // TODO 改為跳 alert 通知 message
+          }
+          vm.getCart();
+          vm.isLoading = false;
+        });
     }
   },
   created() {
