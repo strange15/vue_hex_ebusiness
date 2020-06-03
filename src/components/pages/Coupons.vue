@@ -209,7 +209,6 @@ export default {
         .get(`${this.API.LIST_ALL_COUPONS}?page=${page}`)
         .then(response => {
           vm.coupons = response.data.coupons;
-          console.log('vm.coupons', vm.coupons);
           vm.pagination = response.data.pagination;
           vm.isLoading = false;
         });
@@ -220,6 +219,7 @@ export default {
         this.isNew = true;
       } else {
         this.tempCoupon = Object.assign({}, item);
+        this.tempCoupon.due_date = this.$moment(this.tempCoupon.due_date).format("YYYY-MM-DD"); // 轉換時間格式以正常顯示
         this.isNew = false;
       }
       $("#couponModal").modal("show");
