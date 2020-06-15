@@ -96,7 +96,7 @@
     </div>
 
     <!-- 購物車表單 -->
-    <div class="my-5 row justify-content-center">
+    <div class="my-5 row justify-content-center" v-if="cart_length !== 0">
       <form class="col-md-6" @submit.prevent="createOrder">
         <div class="form-group">
           <label for="useremail">Email</label>
@@ -333,20 +333,27 @@ export default {
         }
         vm.isLoading = true;
         this.$http
-        .post(`${this.API.CREATE_A_ORDER}`, { data: order })
-        .then(response => {
-          if (!response.data.success) {
-            console.log("建立失敗"); // TODO 改為跳 alert 通知 message
-          }
-          console.log("createOrder", response);
-          vm.isLoading = false;
-        });
+          .post(`${this.API.CREATE_A_ORDER}`, { data: order })
+          .then(response => {
+            console.log("createOrder", response);
+            if (!response.data.success) {
+              console.log("建立失敗"); // TODO 改為跳 alert 通知 message
+            } else {
+              vm.$router.push(`customer_checkout/${response.data.orderId}`);
+            }
+            vm.isLoading = false;
+          });
       });
     }
   },
   created() {
     this.getProducts();
     this.getCart();
+  },
+  computed: {
+    cart_length: function() {
+      return this.cart.carts.length;
+    }
   }
 };
 </script>
