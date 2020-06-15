@@ -15,6 +15,7 @@ import App from "./App";
 import router from "./router";
 import './bus';
 import currencyFilter from './filters/currency';
+import date from './filters/date';
 import API from '../src/assets/js/api';
 
 Vue.config.productionTip = false;
@@ -45,6 +46,7 @@ Vue.use(VueAxios, axios);
 
 Vue.component('Loading', Loading); // 全域註冊 component
 Vue.filter('currency', currencyFilter); // 全域註冊 Filter
+Vue.filter('date', date); // 全域註冊 Filter
 Vue.prototype.API = API; // 全域註冊 export deafult 的 js
 Vue.prototype.$moment = moment; //全域註冊 moment
 

@@ -241,6 +241,7 @@ export default {
         }
       },
       cart: [],
+      cart_length: 0,
       status: {
         itemLoading: ""
       },
@@ -302,6 +303,9 @@ export default {
       vm.isLoading = true;
       this.$http.get(`${this.API.LIST_CART}`).then(response => {
         vm.cart = response.data.data;
+        if( vm.cart ) {
+          vm.cart_length = vm.cart.carts.length || 0;
+        }
         vm.isLoading = false;
       });
     },
@@ -350,11 +354,11 @@ export default {
     this.getProducts();
     this.getCart();
   },
-  computed: {
-    cart_length: function() {
-      return this.cart.carts.length;
-    }
-  }
+  // computed: {
+  //   cart_length: function() {
+  //     return this.cart.carts.length;
+  //   }
+  // }
 };
 </script>
 
