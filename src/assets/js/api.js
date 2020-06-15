@@ -16,4 +16,5 @@ export default {
     ADD_TO_CART: 'https://vue-course-api.hexschool.io/api/strange/cart', // 加入購物車
     LIST_CART: 'https://vue-course-api.hexschool.io/api/strange/cart', // 列出購物車清單
     DELETE_FROM_CART: 'https://vue-course-api.hexschool.io/api/strange/cart', // 刪除購物車一筆清單
+    CREATE_A_ORDER: 'https://vue-course-api.hexschool.io/api/strange/order', // 建立一筆訂單
 }
