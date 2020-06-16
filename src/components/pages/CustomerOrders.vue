@@ -63,7 +63,7 @@
               <button
                 type="button"
                 class="btn btn-outline-danger btn-sm"
-                @click="delFromCart(item.id)"
+                @click="openDelCartModal(item)"
               >
                 <i class="far fa-trash-alt"></i>
               </button>
@@ -220,6 +220,36 @@
         </div>
       </div>
     </div>
+
+    <!-- 刪除 confirm modal -->
+    <div
+      class="modal fade"
+      id="delCartModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content border-0">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title" id="exampleModalLabel">
+              <span>刪除產品</span>
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            是否刪除此商品(刪除後將無法恢復)。
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-danger" @click="delCart">確認刪除</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -242,6 +272,7 @@ export default {
       },
       cart: [],
       cart_length: 0,
+      tempDelCart: "",
       status: {
         itemLoading: ""
       },
@@ -285,18 +316,22 @@ export default {
           vm.status.itemLoading = "";
         });
     },
-    delFromCart(id) {
+    delCart() {
       const vm = this;
       vm.isLoading = true;
-      let api = `${this.API.DELETE_FROM_CART}/${id}`;
+      let api = `${this.API.DELETE_FROM_CART}/${vm.tempDelCart.id}`;
       this.$http["delete"](api).then(response => {
         if (!response.data.success) {
           console.log("刪除失敗");
         }
-        // TODO 先跳 confirm 提醒
+        $("#delCartModal").modal("hide");
         vm.getCart();
         vm.isLoading = false;
       });
+    },
+    openDelCartModal(item) {
+      this.tempDelCart = Object.assign({}, item);
+      $("#delCartModal").modal("show");
     },
     getCart() {
       const vm = this;
@@ -318,9 +353,8 @@ export default {
       this.$http
         .post(`${this.API.USE_COUPON}`, { data: code })
         .then(response => {
-          console.log("useCoupon", response);
           if (!response.data.success) {
-            console.log("套用失敗"); // TODO 改為跳 alert 通知 message
+            this.$bus.$emit("message:push", "套用失敗", "danger");
           }
           vm.getCart();
           vm.isLoading = false;
@@ -341,24 +375,19 @@ export default {
           .then(response => {
             console.log("createOrder", response);
             if (!response.data.success) {
-              console.log("建立失敗"); // TODO 改為跳 alert 通知 message
+              this.$bus.$emit("message:push", "建立失敗", "danger");
             } else {
               vm.$router.push(`customer_checkout/${response.data.orderId}`);
             }
             vm.isLoading = false;
           });
       });
-    }
+    },
   },
   created() {
     this.getProducts();
     this.getCart();
   },
-  // computed: {
-  //   cart_length: function() {
-  //     return this.cart.carts.length;
-  //   }
-  // }
 };
 </script>
 

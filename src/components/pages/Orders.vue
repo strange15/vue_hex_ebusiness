@@ -17,7 +17,6 @@
           <td>{{ order.user.email }}</td>
           <td class="">
             <div v-for="product in order.products" :key="product.id">
-              <!-- {{ product.product.title }} -->
               {{ product.product.title }}：{{ product.product.num }}{{ product.product.unit }}
             </div>
           </td>

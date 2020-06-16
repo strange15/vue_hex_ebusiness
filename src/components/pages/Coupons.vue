@@ -93,7 +93,6 @@
                 </div>
                 <div class="form-group">
                   <label for="due_date">到期日</label>
-                  <!-- TODO tempCoupon.due_date 轉為 YYYY/MM/DD 正常顯示 -->
                   <input
                     type="date"
                     class="form-control"
