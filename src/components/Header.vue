@@ -1,15 +1,13 @@
 <template>
   <div>
-    <!-- <div class="vld-parent">
-      <loading :active.sync="isLoading"></loading>
-    </div>-->
-    <div class="header" :class="{ 'fixed-header': headerClass === true }">header</div>
+    <div class="header" :class="{ 'fixed-header': headerClass === true }">
+      header
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Home",
   data() {
     return {
       headerClass: false
@@ -32,19 +30,20 @@ export default {
   }
 };
 </script>
-
 <style scoped>
 body {
   height: 110vh !important;
 }
 .header {
-  height: 360px;
+  height: 60px;
   z-index: 10;
-}
-.fixed-header {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
+}
+.fixed-header {
+  position: fixed;
+  
 }
 </style>

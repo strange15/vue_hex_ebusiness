@@ -7,7 +7,8 @@ import Coupons from '@/components/pages/Coupons';
 import Orders from '@/components/pages/Orders';
 import CustomerOrder from "@/components/pages/CustomerOrders";
 import CustomerCheckout from "@/components/pages/CustomerCheckout";
-import Home from "@/components/pages/Home";
+import Home from "@/components/Home";
+import Index from "@/components/pages/Index";
 
 Vue.use(Router);
 
@@ -51,7 +52,16 @@ export default new Router({
     {
       path: "/",
       name: "Home",
-      component: Home
+      component: Home,
+      redirect:'/index',
+      children: [
+        {
+          path: "index",
+          name: "Index",
+          component: Index,
+        },
+
+      ]
     },
     // {
     //   path: "/",
