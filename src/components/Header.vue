@@ -66,10 +66,6 @@ export default {
     color: #000;
     text-decoration: none;
     margin-right: 2rem;
-
-    // &:nth-child(n+2) {
-    //   margin-left: 1rem;
-    // }
   }
 }
 .fixed-header {
