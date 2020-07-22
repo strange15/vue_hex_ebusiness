@@ -2,8 +2,8 @@
   <div>
     <div class="header" :class="{ 'fixed-header': headerClass === true }">
       <router-link class="logo" to="/index">
-        <img src="../assets/images/header/logo.png"
-      /></router-link>
+        <img src="../assets/images/header/logo.png"/>
+      </router-link>
 
       <router-link class="link" to="/">關於我們</router-link>
       <router-link class="link" to="/">查看訂單</router-link>
@@ -37,7 +37,7 @@ export default {
   }
 };
 </script>
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .header {
   height: 7rem;
   z-index: 100;
@@ -49,6 +49,7 @@ export default {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  transition: .5s all;
 
   .logo {
     position: absolute;
