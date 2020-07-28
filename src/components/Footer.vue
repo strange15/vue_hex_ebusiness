@@ -33,7 +33,7 @@
 <script>
 // import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 // import 'swiper/dist/css/swiper.css'
-import $ from "jquery";
+// import $ from "jquery";
 export default {
   data() {
     return {

@@ -8,7 +8,8 @@ import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import moment from 'moment';
 import VeeValidate from './assets/js/veeValidate.js' // vee-validate 統整到 veeValidate.js 內
-
+import jquery from "jquery"
+window.$ = window.jQuery = jquery
 import App from "./App";
 import router from "./router";
 import './bus';
@@ -17,8 +18,11 @@ import date from './filters/date';
 import API from '../src/assets/js/api';
 
 /** test owl-carousel */
-import 'owl.carousel';
-import 'owl.carousel/dist/assets/owl.carousel.css';
+// import 'owl.carousel';
+// import 'owl.carousel/dist/assets/owl.carousel.css';
+let owl_carousel = require("owl.carousel"); // fix 一直抓不到 owl_carousel 的 bug, 改用 require 包
+window.fn = owl_carousel;
+import "owl.carousel/dist/assets/owl.carousel.css";
 /** test owl-carousel end */
 
 Vue.config.productionTip = false;
