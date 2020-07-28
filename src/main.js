@@ -16,6 +16,11 @@ import currencyFilter from './filters/currency';
 import date from './filters/date';
 import API from '../src/assets/js/api';
 
+/** test owl-carousel */
+import 'owl.carousel';
+import 'owl.carousel/dist/assets/owl.carousel.css';
+/** test owl-carousel end */
+
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
 

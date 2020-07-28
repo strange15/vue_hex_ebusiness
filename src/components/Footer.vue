@@ -62,8 +62,13 @@ export default {
     // SwiperSlide
   },
   created() {
-    $(".owl-carousel").owlCarousel();
+    
   },
+  mounted() {
+    // let owl_carousel = require('owl.carousel');
+    // window.fn = owl_carousel;
+    $(".owl-carousel").owlCarousel();
+  }
 };
 </script>
 <style lang="less" scoped>
