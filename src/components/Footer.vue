@@ -12,16 +12,16 @@
           <div class="flex-column">
             <div class="flex-row">
               <a href="#" class="text-footer">
-                <i class="fab fa-facebook-f"></i>
+                <i class="fab fa-facebook-square"></i>
               </a>
               <a href="#" class="text-footer">
-                <i class="fab fa-github"></i>
+                <i class="fab fa-twitter-square"></i>
               </a>
               <a href="#" class="text-footer">
-                <i class="fab fa-instagram"></i>
+                <i class="fab fa-youtube-square"></i>
               </a>
-              <a href="#" type="mail" class="text-footer">
-                <i class="fas fa-envelope"></i>
+              <a href="#" class="text-footer">
+                <i class="fab fa-linkedin"></i>
               </a>
             </div>2020©Copyright Strange
           </div>
@@ -65,7 +65,7 @@ export default {
   }
   .text-footer {
     color: #fff;
-    font-size: 1.8rem;
+    font-size: 1.2rem;
 
     &:nth-child(n + 2) {
       margin-left: 1rem;

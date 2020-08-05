@@ -33,45 +33,35 @@
           </div>
         </div>
       </div>
-      <!-- <a
-        class="carousel-control-prev"
-        href="#carouselExampleIndicators"
-        role="button"
-        data-slide="prev"
-      >
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a
-        class="carousel-control-next"
-        href="#carouselExampleIndicators"
-        role="button"
-        data-slide="next"
-      >
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a> -->
     </div>
 
-    <div class="article section1">
-      &nbsp;
-      <p>&nbsp;</p>
-      <p class="MsoNormal">
+    <!-- 廢文 -->
+    <h2 style="text-align: center; margin: 5rem 0;">
+      <span style="font-size: 36px;font-weight: bold;">
+        The day I met you like a gift.
+        <br />With the hope that every day will be a gift.
+      </span>
+    </h2>
+
+    <!-- Event -->
+    <div class="event flex-row">
+      <!-- TODO 放 event 字樣 -->
+      <img src="../../assets/images/index/event1.jpg"/>
+      <!-- TODO 放個影片連結 or 假影片 start 按鈕 -->
+      <img src="../../assets/images/index/event2.jpg"/>
+    </div>
+
+    <!-- 優惠活動 -->
+    <div class="article section1 flex-row">
+      <div class="mask"></div>
+      <div class="MsoNormal flex-column">
         <span lang="EN-US">
-          &nbsp;&nbsp;&nbsp; Test
-          <br />
+          ON SALE 30% OFF
         </span>
-      </p>
-      <p class="MsoNormal">
-        <span lang="EN-US">
-          &nbsp; &nbsp; Test
-          <br />
-        </span>
-      </p>
-      <p class="MsoNormal">
-        <span lang="EN-US">&nbsp;&nbsp;&nbsp; Test</span>
-      </p>
-      <p class="MsoNormal">&nbsp;</p>
+        <router-link class="enter-btn" to="/index"><!-- TODO link -->
+          ENTER
+        </router-link>
+      </div>
     </div>
 
     <!-- owl-carousel  -->
@@ -103,7 +93,6 @@
 </template>
 
 <script>
-// import $ from "jquery";
 export default {
   data() {
     return {
@@ -138,27 +127,51 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-/** test background-attachment: fixed  */
 .section1 {
-  color: #fff;
-  background-image: url("https://www.webdesigns.com.tw/img/upload/pic-4.jpg");
-  text-shadow: 5px 4px 5px #575353;
-  font-weight: bold;
-}
-.article {
   width: 100%;
   margin: 0 auto;
   height: 400px;
-  padding: 40px;
-  font: 24px "Arial";
+  font: 6rem "Arial";
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center center;
   background-size: cover;
-  line-height: 28px;
-}
-/** test background-attachment: fixed end */
+  color: #fff;
+  background-image: url("../../assets/images/index/activity.jpg");
+  font-weight: bold;
+  position: relative;
 
+  .mask {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(2, 45, 109, .5);
+  }
+
+  .enter-btn {
+    color: #fff;
+    text-decoration: none;
+    background: #ffd700;
+    font-size: 2.0rem;
+    padding: .7rem 2rem .56rem 2rem;
+    margin-top: 1rem;
+    z-index: 10;
+  }
+}
+
+.event {
+  width:90%;
+  margin: 0 auto 5rem auto;
+  img {
+    width: 35rem;
+
+    &:nth-child(2) {
+      margin-left: 4rem;
+    }
+  }
+}
 
 .carousel {
   .carousel-inner {
@@ -169,13 +182,14 @@ export default {
         top: 30%;
         left: 0;
         right: 0;
-        
+
         p {
           font-size: 8rem;
           font-weight: bold;
         }
-        h5, .h5 {
-            font-size: 2.25rem;
+        h5,
+        .h5 {
+          font-size: 2.25rem;
         }
       }
       img {
