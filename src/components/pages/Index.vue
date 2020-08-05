@@ -14,26 +14,26 @@
         <div class="carousel-item active">
           <img src="../../assets/images/index/banner1.jpg" class="d-block w-100" />
           <div class="carousel-caption d-none d-md-block">
-            <h5>First</h5>
-            <p>Lorem ipsum dolor sit amet.</p>
+            <p>Lorem ipsum dolor.</p>
+            <h5>Lorem, ipsum.</h5>
           </div>
         </div>
         <div class="carousel-item">
           <img src="../../assets/images/index/banner2.jpg" class="d-block w-100" />
           <div class="carousel-caption d-none d-md-block">
-            <h5>Second</h5>
-            <p>Lorem ipsum dolor sit amet.</p>
+            <p>Lorem ipsum dolor.</p>
+            <h5>Lorem, ipsum dolor.</h5>
           </div>
         </div>
         <div class="carousel-item">
           <img src="../../assets/images/index/banner3.jpg" class="d-block w-100" />
           <div class="carousel-caption d-none d-md-block">
-            <h5>Third</h5>
-            <p>Lorem ipsum dolor sit amet.</p>
+            <p>Lorem ipsum dolor.</p>
+            <h5>Lorem ipsum dolor sit.</h5>
           </div>
         </div>
       </div>
-      <a
+      <!-- <a
         class="carousel-control-prev"
         href="#carouselExampleIndicators"
         role="button"
@@ -50,34 +50,55 @@
       >
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
-      </a>
+      </a> -->
+    </div>
+
+    <div class="article section1">
+      &nbsp;
+      <p>&nbsp;</p>
+      <p class="MsoNormal">
+        <span lang="EN-US">
+          &nbsp;&nbsp;&nbsp; Test
+          <br />
+        </span>
+      </p>
+      <p class="MsoNormal">
+        <span lang="EN-US">
+          &nbsp; &nbsp; Test
+          <br />
+        </span>
+      </p>
+      <p class="MsoNormal">
+        <span lang="EN-US">&nbsp;&nbsp;&nbsp; Test</span>
+      </p>
+      <p class="MsoNormal">&nbsp;</p>
     </div>
 
     <!-- owl-carousel  -->
     <!-- <div class="owl-carousel owl-theme animated">
-      <div>
-        <img src="../../assets/images/index/banner1.jpg" class />
-      </div>
-      <div>
-        <img src="../../assets/images/index/banner2.jpg" class />
-      </div>
-      <div>
-        <img src="../../assets/images/index/banner3.jpg" class />
-      </div>
-      <div class="owl-controls">
-        <div class="owl-dots">
-          <div class="owl-dot active">
-            <span></span>
-          </div>
-          <div class="owl-dot">
-            <span></span>
-          </div>
-          <div class="owl-dot">
-            <span></span>
+        <div>
+          <img src="../../assets/images/index/banner1.jpg" class />
+        </div>
+        <div>
+          <img src="../../assets/images/index/banner2.jpg" class />
+        </div>
+        <div>
+          <img src="../../assets/images/index/banner3.jpg" class />
+        </div>
+        <div class="owl-controls">
+          <div class="owl-dots">
+            <div class="owl-dot active">
+              <span></span>
+            </div>
+            <div class="owl-dot">
+              <span></span>
+            </div>
+            <div class="owl-dot">
+              <span></span>
+            </div>
           </div>
         </div>
-      </div>
-    </div> -->
+    </div>-->
   </div>
 </template>
 
@@ -117,10 +138,46 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+/** test background-attachment: fixed  */
+.section1 {
+  color: #fff;
+  background-image: url("https://www.webdesigns.com.tw/img/upload/pic-4.jpg");
+  text-shadow: 5px 4px 5px #575353;
+  font-weight: bold;
+}
+.article {
+  width: 100%;
+  margin: 0 auto;
+  height: 400px;
+  padding: 40px;
+  font: 24px "Arial";
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center center;
+  background-size: cover;
+  line-height: 28px;
+}
+/** test background-attachment: fixed end */
+
+
 .carousel {
   .carousel-inner {
     height: 100vh;
+
     .carousel-item {
+      .carousel-caption {
+        top: 30%;
+        left: 0;
+        right: 0;
+        
+        p {
+          font-size: 8rem;
+          font-weight: bold;
+        }
+        h5, .h5 {
+            font-size: 2.25rem;
+        }
+      }
       img {
         width: 100%;
         height: 100vh;
