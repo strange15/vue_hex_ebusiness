@@ -63,6 +63,11 @@ export default new Router({
 
       ]
     },
+    { // TODO mark
+      path: "/customer_order",
+      name: "CustomerOrder",
+      component: CustomerOrder
+    },
     // {
     //   path: "/",
     //   name: "Dashboard",

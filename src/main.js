@@ -20,10 +20,11 @@ import API from '../src/assets/js/api';
 /** test owl-carousel */
 // import 'owl.carousel';
 // import 'owl.carousel/dist/assets/owl.carousel.css';
-let owl_carousel = require("owl.carousel"); // fix 一直抓不到 owl_carousel 的 bug, 改用 require 包
-window.fn = owl_carousel;
-import "owl.carousel/dist/assets/owl.carousel.css";
+// let owl_carousel = require("owl.carousel"); // fix 一直抓不到 owl_carousel 的 bug, 改用 require 包
+// window.fn = owl_carousel;
+// import "owl.carousel/dist/assets/owl.carousel.css";
 /** test owl-carousel end */
+// import slick from 'slick-carousel';
 
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
