@@ -7,18 +7,23 @@
 
       <router-link class="link" to="/">關於我們</router-link>
       <router-link class="link" to="/">查看訂單</router-link>
-      <router-link class="link" to="/">所有商品</router-link>
+      <router-link class="link" to="/ProductsList">所有商品</router-link>
       <router-link class="link" to="/admin">管理員後台</router-link>
+      <shopping-cart></shopping-cart>
     </div>
   </div>
 </template>
 
 <script>
+import ShoppingCart from "./ShoppingCart";
 export default {
   data() {
     return {
       headerClass: false
     };
+  },
+  components: {
+    ShoppingCart
   },
   methods: {
     initHeader() {
@@ -40,6 +45,7 @@ export default {
 <style lang="scss" scoped>
 .header {
   height: 7rem;
+  padding-right: 2rem;
   z-index: 100;
   position: absolute;
   top: 0;

@@ -51,7 +51,6 @@ export default {
       const vm = this;
       vm.isLoading = true;
       this.$http.get(`${this.API.GET_ORDERS}?page=${page}`).then(response => {
-        console.log('getOrders', response.data);
         vm.orders = response.data.orders;
         vm.pagination = response.data.pagination;
         vm.isLoading = false;
