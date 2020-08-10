@@ -9,6 +9,7 @@ import CustomerOrder from "@/components/pages/CustomerOrders";
 import CustomerCheckout from "@/components/pages/CustomerCheckout";
 import Home from "@/components/Home";
 import Index from "@/components/pages/Index";
+import ProductsList from "@/components/pages/ProductsList";
 
 Vue.use(Router);
 
@@ -59,6 +60,11 @@ export default new Router({
           path: "index",
           name: "Index",
           component: Index,
+        },
+        {
+          path: "productsList",
+          name: "ProductsList",
+          component: ProductsList,
         },
 
       ]

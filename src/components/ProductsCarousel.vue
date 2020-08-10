@@ -3,14 +3,14 @@
     <div class="products-slick">
       <div v-for="(product, index) in products" :key="index">
         <!-- TODO router-link -->
-        <router-link class="item" to="/index" v-if="index < 7">
+        <router-link class="item" to="/index">
           <div
             style="height: 400px; background-size: cover; background-position: center"
             :style="{ backgroundImage: `url(${product.imageUrl})` }"
           ></div>
-          {{ product.title }}
-          <div class="" v-if="product.price">{{ product.price }} 元</div>
-          <span class="category">{{ product.category }}</span>
+          <div class="title">{{ product.title }}</div>
+          <div class="price" v-if="product.price">{{ product.price }} 元</div>
+          <div class="category" v-if="index<4">NEW</div>
         </router-link>
       </div>
     </div>
@@ -48,9 +48,10 @@ export default {
         speed: 500,
         infinite: true,
         slidesToShow: 3,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 5000
+        slidesToScroll: 3,
+        // autoplay: true,
+        autoplaySpeed: 5000,
+        arrows: false
       });
     }
   },
@@ -69,12 +70,23 @@ export default {
     font-weight: normal;
     color: #3d3d3d;
     text-decoration: none;
-
+    .title {
+      font-weight: bold;
+    }
+    .price {
+      font-weight: bold;
+      margin-bottom: .6rem;
+    }
     .category {
-      color: #fff;
-      background: #022d6d;
-      padding: .1rem .5rem;
+      color: #333;
+      background: #ffd700;
+      padding: 0.1rem 0.5rem;
       border-radius: 1rem;
+      width: 51px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
     }
   }
   
