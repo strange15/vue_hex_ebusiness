@@ -21,12 +21,7 @@
 import slick from "slick-carousel";
 export default {
   name: "ProductsCarousel",
-  props: {
-    // products: {
-    //   type: Array,
-    //   default: []
-    // }
-  },
+  props: {},
   data() {
     return {
       products: [],

@@ -24,6 +24,7 @@
                 <i class="fab fa-linkedin"></i>
               </a>
             </div>2020©Copyright Strange
+            <br>圖片僅供學習使用，無商業用途
           </div>
         </div>
 

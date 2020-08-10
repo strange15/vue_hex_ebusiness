@@ -8,7 +8,7 @@
       <router-link class="link" to="/">關於我們</router-link>
       <router-link class="link" to="/">查看訂單</router-link>
       <router-link class="link" to="/">所有商品</router-link>
-      <router-link class="link" to="/">管理員後台</router-link>
+      <router-link class="link" to="/admin">管理員後台</router-link>
     </div>
   </div>
 </template>
