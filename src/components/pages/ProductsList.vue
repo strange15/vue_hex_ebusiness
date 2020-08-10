@@ -42,11 +42,13 @@
               <div class="row">
                 <div class="col-md-4 mb-4" v-for="prod in tmpProducts" :key="prod.id">
                   <div class="card border-0 box-shadow text-center h-100">
-                    <img
-                      class="card-img-top"
-                      :src="prod.imageUrl"
-                      alt="Card image cap"
-                    />
+                    <router-link  :to="{ name: 'Product', params: { pid: prod.id }}">
+                      <img
+                        class="card-img-top"
+                        :src="prod.imageUrl"
+                        alt="Card image cap"
+                      />
+                    </router-link>
                     <div class="card-body">
                       <h4 class="card-title">{{ prod.title }}</h4>
                       <p class="card-text">
@@ -57,9 +59,8 @@
                       </p>
                     </div>
                     <div class="card-footer border-top-0 bg-white">
-                      <!-- TODO 加入購物車 -->
-                      <a href="#" class="btn btn-outline-secondary btn-block btn-sm">
-                        <i class="fa fa-cart-plus" aria-hidden="true"></i> 搶購去
+                      <a class="btn btn-outline-secondary btn-block btn-sm" @click="addToCart(prod.id)">
+                        <i class="fa fa-cart-plus" aria-hidden="true"></i> 加入購物車 <i class="fas fa-spinner fa-spin" v-if="status.itemLoading === prod.id"></i>
                       </a>
                     </div>
                   </div>
@@ -78,8 +79,7 @@
 </template>
 
 <script>
-// import $ from "jquery";
-import Pagination from "../Pagination";
+// import Pagination from "../Pagination";
 
 export default {
   data() {
@@ -89,10 +89,13 @@ export default {
       categoryTab: [], // 類別
       tmpProducts: [],
       isLoading: false,
+      status: {
+        itemLoading: ""
+      },
       pagination: {},
     };
   },
-  components: { Pagination },
+  // components: { Pagination },
   methods: {
     getProducts(page = 1) {
       const vm = this;
@@ -102,7 +105,7 @@ export default {
         .then((response) => {
           vm.products = response.data.products;
           // vm.pagination = response.data.pagination;
-          // TODO 額外用 pagination element-ui
+          // TODO 額外用 pagination? element-ui
           vm.filterCategory(vm.products);
           vm.initTab();
           vm.isLoading = false;
@@ -129,6 +132,23 @@ export default {
     initTab() {
       this.changeCategory("all");
     },
+    // 加入購物車
+    addToCart(id, qty = 1) {
+      const vm = this;
+      vm.status.itemLoading = id;
+      const cart = {
+        product_id: id,
+        qty
+      };
+      this.$http
+        .post(`${this.API.ADD_TO_CART}`, { data: cart })
+        .then(response => {
+          console.log('addToCart', response);
+          this.$bus.$emit("shoppingcart:get");
+          $("#productModal").modal("hide");
+          vm.status.itemLoading = "";
+        });
+    },
   },
   created() {
     this.getProducts();
@@ -149,7 +169,7 @@ export default {
         padding-left: 2rem;
 
         &:nth-child(n+2) {
-          margin-top: 1rem;
+          margin-top: .8rem;
         }
 
         i::before {
@@ -159,7 +179,7 @@ export default {
           top: 50%;
           transform: translateY(-44%);
           width: 8px;
-          height: 20px;
+          height: 15px;
           background: #202f95;
         }
       }
@@ -172,7 +192,7 @@ export default {
           top: 50%;
           transform: translateY(-44%);
           width: 8px;
-          height: 20px;
+          height: 15px;
           background: #fff;
         }
       }
@@ -180,6 +200,7 @@ export default {
 
     .btn-outline-secondary:hover {
       background-color: #202f95 !important;
+      color: #fff;
     }
 }
 </style>
