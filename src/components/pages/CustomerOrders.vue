@@ -81,7 +81,7 @@
             <td colspan="3" class="text-right">總計</td>
             <td class="text-right">{{ cart.total }}</td>
           </tr>
-          <tr v-if="cart.tota !== cart.final_total">
+          <tr v-if="cart.total !== cart.final_total">
             <td colspan="3" class="text-right text-success">折扣價</td>
             <td class="text-right text-success">{{ cart.final_total }}</td>
           </tr>
@@ -373,7 +373,6 @@ export default {
         this.$http
           .post(`${this.API.CREATE_A_ORDER}`, { data: order })
           .then(response => {
-            console.log("createOrder", response);
             if (!response.data.success) {
               this.$bus.$emit("message:push", "建立失敗", "danger");
             } else {

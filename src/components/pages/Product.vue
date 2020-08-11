@@ -27,12 +27,6 @@
                 <i class="fa fa-cart-plus" aria-hidden="true"></i> 加入購物車
               </a>
             </div>
-
-            <div class="mt-2 text-right text-muted">
-              <i class="fa fa-cc-visa" aria-hidden="true"></i>
-              <i class="fa fa-cc-jcb" aria-hidden="true"></i>
-              <i class="fa fa-cc-paypal" aria-hidden="true"></i>
-            </div>
           </div>
         </div>
         <div class="col-md-8">

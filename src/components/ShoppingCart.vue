@@ -28,10 +28,9 @@
           </tr>
         </tbody>
       </table>
-      <!-- TODO 到 step1 -->
-      <a href="shoppingCart-checkout.html" class="btn btn-block" v-if="cart_length !== 0">
+      <router-link to="/checkout_step1" class="btn btn-block" v-if="cart_length !== 0">
         <i class="fa fa-cart-plus" aria-hidden="true"></i> 結帳去
-      </a>
+      </router-link>
       <div v-if="cart_length === 0">還沒有商品加入購物車！</div>
     </div>
 

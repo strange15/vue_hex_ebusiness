@@ -11,6 +11,8 @@ import Home from "@/components/Home";
 import Index from "@/components/pages/Index";
 import ProductsList from "@/components/pages/ProductsList";
 import Product from "@/components/pages/Product";
+import CheckoutStep1 from "@/components/pages/CheckoutStep1";
+import CheckoutStep2 from "@/components/pages/CheckoutStep2";
 
 Vue.use(Router);
 
@@ -71,6 +73,16 @@ export default new Router({
           path: "product/:pid",
           name: "Product",
           component: Product,
+        },
+        {
+          path: "checkout_step1",
+          name: "CheckoutStep1",
+          component: CheckoutStep1,
+        },
+        {
+          path: "checkout_step2/:orderId",
+          name: "CheckoutStep2",
+          component: CheckoutStep2,
         },
 
       ]
