@@ -49,7 +49,6 @@ router.beforeEach((to, from, next) => {
 
   // 判斷是否需要驗證
   if (to.meta.requiresAuth) {
-    // const api = "https://vue-course-api.hexschool.io/api/user/check";
     axios.post(API.CHECK_IS_LOGIN).then(response => {
       if (response.data.success){
         next();

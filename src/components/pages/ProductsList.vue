@@ -42,7 +42,7 @@
               <div class="row">
                 <div class="col-md-4 mb-4" v-for="prod in tmpProducts" :key="prod.id">
                   <div class="card border-0 box-shadow text-center h-100">
-                    <router-link  :to="{ name: 'Product', params: { pid: prod.id }}">
+                    <router-link :to="{ name: 'Product', params: { pid: prod.id }}">
                       <img
                         class="card-img-top"
                         :src="prod.imageUrl"
@@ -143,9 +143,8 @@ export default {
       this.$http
         .post(`${this.API.ADD_TO_CART}`, { data: cart })
         .then(response => {
-          console.log('addToCart', response);
           this.$bus.$emit("shoppingcart:get");
-          $("#productModal").modal("hide");
+          // $("#productModal").modal("hide");
           vm.status.itemLoading = "";
         });
     },

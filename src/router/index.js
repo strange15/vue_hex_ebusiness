@@ -68,7 +68,7 @@ export default new Router({
           component: ProductsList,
         },
         {
-          path: "product",
+          path: "product/:pid",
           name: "Product",
           component: Product,
         },

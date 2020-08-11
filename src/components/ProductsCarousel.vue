@@ -2,8 +2,7 @@
   <div style="margin: 5rem auto;">
     <div class="products-slick">
       <div v-for="(product, index) in products" :key="index">
-        <!-- TODO router-link -->
-        <router-link class="item" to="/index">
+        <router-link class="item"   :to="{ name: 'Product', params: { pid: product.id }}">
           <div
             style="height: 400px; background-size: cover; background-position: center"
             :style="{ backgroundImage: `url(${product.imageUrl})` }"
