@@ -13,6 +13,7 @@ import ProductsList from "@/components/pages/ProductsList";
 import Product from "@/components/pages/Product";
 import CheckoutStep1 from "@/components/pages/CheckoutStep1";
 import CheckoutStep2 from "@/components/pages/CheckoutStep2";
+import CheckoutStep3 from "@/components/pages/CheckoutStep3";
 
 Vue.use(Router);
 
@@ -21,7 +22,7 @@ export default new Router({
     // 避免用戶直接進入不存在的頁面
     {
       path: '*',
-      redirect: 'login',
+      redirect: 'index',
     },
     {
       path: "/login",
@@ -84,7 +85,11 @@ export default new Router({
           name: "CheckoutStep2",
           component: CheckoutStep2,
         },
-
+        {
+          path: "checkout_step3",
+          name: "CheckoutStep3",
+          component: CheckoutStep3,
+        },
       ]
     },
     { // TODO mark
