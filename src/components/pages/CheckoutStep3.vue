@@ -28,6 +28,21 @@
             <p v-if="isCopied">已成功複製訂單編號</p>
           </label>
         </div>
+
+        <!-- TODO -->
+        <div class="row no-gutters col-5">
+          <div class="col text-center">
+            <a href="#/checkout_order" class="btn">
+              <i class="fas fa-arrow-left mr-2" aria-hidden="true"></i>查看訂單
+            </a>
+          </div>
+          <div class="col text-center">
+            <a href="#/index" class="btn">
+              繼續逛逛
+              <i class="fas fa-arrow-right ml-2" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -39,7 +54,7 @@ export default {
   data() {
     return {
       orderId: "",
-      isCopied: false
+      isCopied: false,
     };
   },
   methods: {

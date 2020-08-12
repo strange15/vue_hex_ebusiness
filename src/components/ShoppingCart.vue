@@ -70,7 +70,7 @@ export default {
         if (!response.data.success) {
           console.log("刪除失敗");
         }
-        // TODO show success alert (message:push)
+        this.$bus.$emit("message:push", "已刪除此產品！", "success");
         vm.getCart();
         vm.isLoading = false;
       });
@@ -90,7 +90,6 @@ export default {
 </script>
 
 <style lang="less" scope>
-// TODO cart style
 .shopping-cart {
   cursor: pointer;
 }
