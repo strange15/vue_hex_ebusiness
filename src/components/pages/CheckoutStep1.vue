@@ -203,12 +203,11 @@ export default {
             if (!response.data.success) {
               this.$bus.$emit("message:push", "建立失敗", "danger");
             } else {
-              // TODO 改成到 step3 再 copy
-              this.$bus.$emit("message:push", "建立成功!五秒後將導頁", "success");
-              this.$bus.$emit("message:copy", response.data.orderId, "info");
+              this.$bus.$emit("shoppingcart:get");
+              this.$bus.$emit("message:push", "建立成功!三秒後將導至付款頁", "success");
               setTimeout(() => {
                 vm.$router.push(`Checkout_Step2/${response.data.orderId}`);
-              }, 5000);
+              }, 3000);
               
             }
             vm.isLoading = false;
@@ -225,9 +224,10 @@ export default {
         .post(`${this.API.USE_COUPON}`, { data: code })
         .then((response) => {
           if (!response.data.success) {
-            this.$bus.$emit("message:push", "套用失敗", "danger");
+            this.$bus.$emit("message:push", "套用失敗，請確認優惠碼是否正確！", "danger");
           }
           vm.getCart();
+          this.$bus.$emit("shoppingcart:get");
           vm.isLoading = false;
         });
     },
@@ -240,7 +240,7 @@ export default {
         if (!response.data.success) {
           console.log("刪除失敗");
         }
-        // TODO show success alert (message:push)
+        this.$bus.$emit("message:push", "已刪除此產品！", "success");
         vm.getCart();
         this.$bus.$emit("shoppingcart:get");
         vm.isLoading = false;

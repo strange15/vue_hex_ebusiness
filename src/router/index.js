@@ -86,7 +86,7 @@ export default new Router({
           component: CheckoutStep2,
         },
         {
-          path: "checkout_step3",
+          path: "checkout_step3/:orderId",
           name: "CheckoutStep3",
           component: CheckoutStep3,
         },

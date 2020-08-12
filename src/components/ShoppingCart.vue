@@ -9,7 +9,7 @@
       <span class="badge badge-pill badge-danger">{{ cart_length || 0 }}</span>
       <span class="sr-only">unread messages</span>
     </button>
-    <div class="dropdown-menu dropdown-menu-right p-3" style="min-width: 300px" data-offset="400">
+    <div class="dropdown-menu dropdown-menu-right p-3" style="min-width: 400px" data-offset="400">
       <h6 v-if="cart_length !== 0">已選擇商品</h6>
       <table class="table table-sm" v-if="cart_length !== 0">
         <tbody>
@@ -24,7 +24,7 @@
             </td>
             <td class="align-middle">{{ item.product.title }}</td>
             <td class="align-middle">{{ item.qty }} {{ item.product.unit }}</td>
-            <td class="align-middle text-right">${{ item.final_total }}</td>
+            <td class="align-middle text-right">{{ item.final_total | currency }}</td>
           </tr>
         </tbody>
       </table>
