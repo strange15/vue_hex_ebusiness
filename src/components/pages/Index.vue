@@ -62,10 +62,10 @@
 
     <!-- Event -->
     <div class="event flex-row">
-      <!-- TODO 放 event 字樣 -->
       <img src="../../assets/images/index/event1.jpg" />
-      <!-- TODO 放個影片連結 or 假影片 start 按鈕 -->
-      <img src="../../assets/images/index/event2.jpg" />
+      <iframe id="ytplayer" type="text/html" width="560" height="374"
+      src="https://www.youtube.com/embed/GLy2rYHwUqY?autoplay=0&origin=http://example.com"
+      frameborder="0"></iframe>
     </div>
 
     <!-- 優惠活動 -->
@@ -75,10 +75,9 @@
         <span lang="EN-US">
           ON SALE 30% OFF
         </span>
-        <router-link class="enter-btn" to="/index"
-          ><!-- TODO link -->
+        <button class="enter-btn copy" :data-clipboard-text="couponCode">
           ENTER
-        </router-link>
+        </button>
       </div>
     </div>
 
@@ -88,10 +87,12 @@
 
 <script>
 import ProductsCarousel from "../ProductsCarousel";
+import Clipboard from "clipboard";
 export default {
   data() {
     return {
       isLoading: false,
+      couponCode: "open5566"
     };
   },
   components: { ProductsCarousel },
@@ -138,10 +139,24 @@ export default {
           vm.products = response.data.products;
           vm.isLoading = false;
         });
-    }
+    },
+    initClipboard() {
+      let vm = this;
+      this.clipboard = new Clipboard(".copy");
+      //成功回撥
+      this.clipboard.on("success", function (e) {
+        vm.$bus.$emit("message:push", "已為您複製優惠碼 open5566 了！", "success");
+      });
+      //失敗回撥
+      this.clipboard.on("error", function (e) {
+        console.error("Action:", e.action);
+        console.error("Trigger:", e.trigger);
+      });
+    },
   },
   created() {
     this.initBootstrapCarousel();
+    this.initClipboard();
   },
   computed: {},
   mounted() {
@@ -180,19 +195,29 @@ export default {
     font-size: 2rem;
     padding: 0.7rem 2rem 0.56rem 2rem;
     margin-top: 1rem;
+    border: 0;
     z-index: 10;
   }
 }
 
 .event {
-  width: 90%;
+  width: 62%;
   margin: 0 auto 5rem auto;
+  position: relative;
   img {
     width: 35rem;
-
-    &:nth-child(2) {
-      margin-left: 4rem;
-    }
+    margin-right: 4rem;
+  }
+  &::after {
+    content: 'EVENT';
+    display: table;
+    position: absolute;
+    top: 0;
+    left: 5%;
+    background: #fff;
+    color: #000;
+    padding: .5rem 1rem;
+    font-size: 1.2rem;
   }
 }
 

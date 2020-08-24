@@ -9,6 +9,8 @@ import CustomerOrder from "@/components/pages/CustomerOrders";
 import CustomerCheckout from "@/components/pages/CustomerCheckout";
 import Home from "@/components/Home";
 import Index from "@/components/pages/Index";
+// import AboutUs from "@/components/pages/AboutUs";
+import CheckoutOrder from "@/components/pages/CheckoutOrder";
 import ProductsList from "@/components/pages/ProductsList";
 import Product from "@/components/pages/Product";
 import CheckoutStep1 from "@/components/pages/CheckoutStep1";
@@ -65,6 +67,16 @@ export default new Router({
           name: "Index",
           component: Index,
         },
+        // {
+        //   path: "AboutUs",
+        //   name: "AboutUs",
+        //   component: AboutUs,
+        // },
+        {
+          path: "CheckoutOrder",
+          name: "CheckoutOrder",
+          component: CheckoutOrder,
+        },
         {
           path: "productsList",
           name: "ProductsList",
@@ -92,22 +104,22 @@ export default new Router({
         },
       ]
     },
-    // {
-    //   path: "/",
-    //   name: "Dashboard",
-    //   component: Dashboard,
-    //   children: [
-    //     {
-    //       path: "customer_order",
-    //       name: "CustomerOrder",
-    //       component: CustomerOrder
-    //     },
-    //     {
-    //       path: "customer_checkout/:orderId",
-    //       name: "CustomerCheckout",
-    //       component: CustomerCheckout
-    //     }
-    //   ]
-    // }
+    {
+      path: "/",
+      name: "Dashboard",
+      component: Dashboard,
+      children: [
+        {
+          path: "customer_order",
+          name: "CustomerOrder",
+          component: CustomerOrder
+        },
+        {
+          path: "customer_checkout/:orderId",
+          name: "CustomerCheckout",
+          component: CustomerCheckout
+        }
+      ]
+    }
   ]
 });

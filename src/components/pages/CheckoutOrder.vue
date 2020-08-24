@@ -1,6 +1,25 @@
 <template>
-  <div class="my-5 row justify-content-center">
-    <form class="col-md-6" @submit.prevent="payOrder">
+  <div>
+    <div class="vld-parent">
+      <loading :active.sync="isLoading"></loading>
+    </div>
+    <div class="container main-contant py-5" style="margin-top: 6rem;">
+      <div class="row justify-content-center my-5">
+        <div class="col-9 text-center success-block">
+          <label for="order" class="h5 text-left order">
+            請輸入訂單號碼：
+            <input
+              type="text"
+              v-model="orderId"
+              class="form-control mt-3 cursor-pointer"
+              @keyup.enter="getOrder"
+            />
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <form class="container main-contant py-5 col-md-6" @submit.prevent="payOrder" v-if="hasOrder">
       <table class="table">
         <thead>
           <th>品名</th>
@@ -58,13 +77,12 @@
 
 <script>
 export default {
-  name: "CustomerCheckout",
   data() {
     return {
+      isLoading: false,
       orderId: "",
-      order: {
-        user: {},
-      },
+      order: {},
+      hasOrder: false,
     };
   },
   methods: {
@@ -74,7 +92,12 @@ export default {
       this.$http
         .get(`${this.API.GET_A_ORDER}/${vm.orderId}`)
         .then((response) => {
-          vm.order = response.data.order;
+          if( response.data.order ) {
+            vm.order = response.data.order;
+            vm.hasOrder = true;
+          }else{
+            vm.$bus.$emit("message:push", "查無此訂單！", "danger");
+          }
           vm.isLoading = false;
         });
     },
@@ -85,18 +108,28 @@ export default {
         .post(`${this.API.PAY_ORDER}/${vm.orderId}`)
         .then((response) => {
           if (response.data.success) {
-            vm.getOrder();
+            this.$router.push({
+              name: "CheckoutStep3",
+              params: { orderId: this.orderId },
+            });
           }
           vm.isLoading = false;
         });
     },
   },
-  created() {
-    this.orderId = this.$route.params.orderId; // this.$route.params.orderId 此處的 orderId 是對應路由的 /:orderId
-    this.getOrder();
-  },
+  created() {},
 };
 </script>
-
-<style scope>
+<style lang="less" scope>
+.order {
+  position: relative;
+  input {
+    padding-right: 2.5rem;
+  }
+  i {
+    position: absolute;
+    right: 10px;
+    top: 50px;
+  }
+}
 </style>

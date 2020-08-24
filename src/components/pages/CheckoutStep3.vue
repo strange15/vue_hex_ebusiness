@@ -29,18 +29,17 @@
           </label>
         </div>
 
-        <!-- TODO -->
         <div class="row no-gutters col-5">
           <div class="col text-center">
-            <a href="#/checkout_order" class="btn">
+            <router-link class="btn" to="/CheckoutOrder">
               <i class="fas fa-arrow-left mr-2" aria-hidden="true"></i>查看訂單
-            </a>
+            </router-link>
           </div>
           <div class="col text-center">
-            <a href="#/index" class="btn">
+            <router-link class="btn" to="/ProductsList">
               繼續逛逛
               <i class="fas fa-arrow-right ml-2" aria-hidden="true"></i>
-            </a>
+            </router-link>
           </div>
         </div>
       </div>
