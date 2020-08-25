@@ -80,7 +80,7 @@ export default {
       color: #333;
       background: #ffd700;
       padding: 0.1rem 0.5rem;
-      border-radius: 1rem;
+      // border-radius: 1rem;
       width: 51px;
       display: flex;
       justify-content: center;

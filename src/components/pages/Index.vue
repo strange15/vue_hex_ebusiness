@@ -76,6 +76,7 @@
           ON SALE 30% OFF
         </span>
         <button class="enter-btn copy" :data-clipboard-text="couponCode">
+          <!-- TODO 彈窗改中間 -->
           COPY COUPON
         </button>
       </div>
@@ -214,8 +215,8 @@ export default {
     position: absolute;
     top: 0;
     left: 5%;
-    background: #fff;
-    color: #000;
+    background: #ffd700;
+    color: #fff;
     padding: .5rem 1rem;
     font-size: 1.2rem;
   }

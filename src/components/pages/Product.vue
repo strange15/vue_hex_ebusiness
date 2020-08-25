@@ -19,6 +19,7 @@
               </div>
             </div>
             <hr />
+            <!-- TODO 煥至右手邊 -->
             <div class="input-group mt-3">
               <select name class="form-control mr-1" v-model="product.num">
                 <option :value="num" v-for="num in 5" :key="num">選購 {{ num }} {{ product.unit }}</option>

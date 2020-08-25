@@ -18,8 +18,8 @@
         </div>
       </div>
     </div>
-
-    <form class="container main-contant py-5 col-md-6" @submit.prevent="payOrder" v-if="hasOrder">
+    <!-- TODO -MFZLvQcUNqtuW0kFIQh -->
+    <form class="container main-contant py-5 col-md-6 mt-0" @submit.prevent="payOrder" v-if="hasOrder">
       <table class="table">
         <thead>
           <th>品名</th>

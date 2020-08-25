@@ -104,22 +104,22 @@ export default new Router({
         },
       ]
     },
-    {
-      path: "/",
-      name: "Dashboard",
-      component: Dashboard,
-      children: [
-        {
-          path: "customer_order",
-          name: "CustomerOrder",
-          component: CustomerOrder
-        },
-        {
-          path: "customer_checkout/:orderId",
-          name: "CustomerCheckout",
-          component: CustomerCheckout
-        }
-      ]
-    }
+    // {
+    //   path: "/",
+    //   name: "Dashboard",
+    //   component: Dashboard,
+    //   children: [
+    //     {
+    //       path: "customer_order",
+    //       name: "CustomerOrder",
+    //       component: CustomerOrder
+    //     },
+    //     {
+    //       path: "customer_checkout/:orderId",
+    //       name: "CustomerCheckout",
+    //       component: CustomerCheckout
+    //     }
+    //   ]
+    // }
   ]
 });

@@ -51,7 +51,7 @@
                     </router-link>
                     <div class="card-body">
                       <h4 class="card-title">{{ prod.title }}</h4>
-                      <p class="card-text">
+                      <p class="card-text bold">
                         {{ prod.description }}
                       </p>
                       <p class="card-text">
@@ -200,6 +200,10 @@ export default {
     .btn-outline-secondary:hover {
       background-color: #202f95 !important;
       color: #fff;
+    }
+
+    .bold {
+      font-weight: bold;
     }
 }
 </style>

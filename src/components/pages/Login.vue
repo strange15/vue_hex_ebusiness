@@ -32,7 +32,7 @@
 
 <script>
 export default {
-  name: "HelloWorld",
+  name: "Login",
   data() {
     return {
       user: {
@@ -46,7 +46,6 @@ export default {
     signin() {
       let vm = this;
       vm.isLoading = true;
-      // const api = "https://vue-course-api.hexschool.io/admin/signin";
       this.$http.post(this.API.LOGIN, vm.user).then(response => {
         if (response.data.success) vm.$router.push("/admin/products");
         vm.isLoading = false;
