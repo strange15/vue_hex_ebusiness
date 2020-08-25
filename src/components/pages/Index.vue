@@ -76,7 +76,6 @@
           ON SALE 30% OFF
         </span>
         <button class="enter-btn copy" :data-clipboard-text="couponCode">
-          <!-- TODO 彈窗改中間 -->
           COPY COUPON
         </button>
       </div>
@@ -146,7 +145,11 @@ export default {
       this.clipboard = new Clipboard(".copy");
       //成功回撥
       this.clipboard.on("success", function (e) {
-        vm.$bus.$emit("message:push", "已為您複製優惠碼 open5566 了！", "success");
+        vm.$alert('已為您複製優惠碼 open5566 了！', '複製文字', {
+          confirmButtonText: '確定',
+          callback: action => {
+          }
+        });
       });
       //失敗回撥
       this.clipboard.on("error", function (e) {

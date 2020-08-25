@@ -17,6 +17,14 @@
           </label>
         </div>
       </div>
+        <el-alert
+          title="查無此訂單！"
+          type="error"
+          class="alert-error"
+          effect="dark"
+          @close="closeAlert"
+          v-if="hasError">
+        </el-alert>
     </div>
     <!-- TODO -MFZLvQcUNqtuW0kFIQh -->
     <form class="container main-contant py-5 col-md-6 mt-0" @submit.prevent="payOrder" v-if="hasOrder">
@@ -83,6 +91,7 @@ export default {
       orderId: "",
       order: {},
       hasOrder: false,
+      hasError: false,
     };
   },
   methods: {
@@ -96,7 +105,7 @@ export default {
             vm.order = response.data.order;
             vm.hasOrder = true;
           }else{
-            vm.$bus.$emit("message:push", "查無此訂單！", "danger");
+            vm.hasError = true;
           }
           vm.isLoading = false;
         });
@@ -116,8 +125,12 @@ export default {
           vm.isLoading = false;
         });
     },
+    closeAlert() {
+      this.hasError = false;
+    },
   },
-  created() {},
+  created() {
+  },
 };
 </script>
 <style lang="less" scope>
@@ -131,5 +144,9 @@ export default {
     right: 10px;
     top: 50px;
   }
+}
+.alert-error {
+  width: 9rem;
+  margin: 0 auto;
 }
 </style>

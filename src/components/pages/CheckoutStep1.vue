@@ -204,11 +204,12 @@ export default {
               this.$bus.$emit("message:push", "建立失敗", "danger");
             } else {
               this.$bus.$emit("shoppingcart:get");
-              this.$bus.$emit("message:push", "建立成功!三秒後將導至付款頁", "success");
-              setTimeout(() => {
-                vm.$router.push(`Checkout_Step2/${response.data.orderId}`);
-              }, 3000);
-              
+              vm.$alert('為您導至付款頁？', '建立成功!', {
+                confirmButtonText: '確定',
+                callback: action => {
+                  vm.$router.push(`Checkout_Step2/${response.data.orderId}`);
+                }
+              });
             }
             vm.isLoading = false;
           });

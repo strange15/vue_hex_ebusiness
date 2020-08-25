@@ -16,6 +16,8 @@ import './bus';
 import currencyFilter from './filters/currency';
 import date from './filters/date';
 import API from '../src/assets/js/api';
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 
 /** test owl-carousel */
 // import 'owl.carousel';
@@ -28,6 +30,7 @@ import API from '../src/assets/js/api';
 
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
+Vue.use(ElementUI);
 
 Vue.component('Loading', Loading); // 全域註冊 component
 Vue.filter('currency', currencyFilter); // 全域註冊 Filter
