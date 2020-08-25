@@ -5,7 +5,7 @@
         <img src="../assets/images/header/logo.png"/>
       </router-link>
 
-      <router-link class="link" to="/">關於我們</router-link>
+      <router-link class="link" to="/AboutUs">關於我們</router-link>
       <router-link class="link" to="/CheckoutOrder">查看訂單</router-link>
       <router-link class="link" to="/ProductsList">所有商品</router-link>
       <router-link class="link" to="/admin">管理員後台</router-link>

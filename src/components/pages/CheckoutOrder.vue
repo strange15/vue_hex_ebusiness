@@ -26,7 +26,6 @@
           v-if="hasError">
         </el-alert>
     </div>
-    <!-- TODO -MFZLvQcUNqtuW0kFIQh -->
     <form class="container main-contant py-5 col-md-6 mt-0" @submit.prevent="payOrder" v-if="hasOrder">
       <table class="table">
         <thead>
@@ -101,6 +100,7 @@ export default {
       this.$http
         .get(`${this.API.GET_A_ORDER}/${vm.orderId}`)
         .then((response) => {
+          // -MFZLvQcUNqtuW0kFIQh
           if( response.data.order ) {
             vm.order = response.data.order;
             vm.hasOrder = true;

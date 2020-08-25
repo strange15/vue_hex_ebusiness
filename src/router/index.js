@@ -9,7 +9,7 @@ import CustomerOrder from "@/components/pages/CustomerOrders";
 import CustomerCheckout from "@/components/pages/CustomerCheckout";
 import Home from "@/components/Home";
 import Index from "@/components/pages/Index";
-// import AboutUs from "@/components/pages/AboutUs";
+import AboutUs from "@/components/pages/AboutUs";
 import CheckoutOrder from "@/components/pages/CheckoutOrder";
 import ProductsList from "@/components/pages/ProductsList";
 import Product from "@/components/pages/Product";
@@ -67,11 +67,11 @@ export default new Router({
           name: "Index",
           component: Index,
         },
-        // {
-        //   path: "AboutUs",
-        //   name: "AboutUs",
-        //   component: AboutUs,
-        // },
+        {
+          path: "AboutUs",
+          name: "AboutUs",
+          component: AboutUs,
+        },
         {
           path: "CheckoutOrder",
           name: "CheckoutOrder",

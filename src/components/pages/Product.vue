@@ -6,30 +6,6 @@
     </div>
     <div class="container main-content mb-1">
       <div class="row">
-        <div class="col-md-4 mb-5">
-          <div>
-            <h1 class="h2">
-              {{  product.title }}
-            </h1>
-            <div class="d-flex my-3 align-items-end justify-content-end">
-              <del class="text-muted">售價 ${{  product.origin_price }}</del>
-              <div class="h3 mb-0 ml-auto text-danger">
-                <small>網路價 NT$</small>
-                <strong>{{  product.price }}</strong>
-              </div>
-            </div>
-            <hr />
-            <!-- TODO 煥至右手邊 -->
-            <div class="input-group mt-3">
-              <select name class="form-control mr-1" v-model="product.num">
-                <option :value="num" v-for="num in 5" :key="num">選購 {{ num }} {{ product.unit }}</option>
-              </select>
-              <a href="" class="btn btn-primary" @click.prevent="addToCart(product.id, product.num)">
-                <i class="fa fa-cart-plus" aria-hidden="true"></i> 加入購物車
-              </a>
-            </div>
-          </div>
-        </div>
         <div class="col-md-8">
           <h2>{{ product.description }}</h2>
           <img
@@ -47,6 +23,29 @@
               amet expedita perferendis voluptatem dicta dignissimos tempora ut atque, rerum doloribus? Magni, blanditiis.
               Assumenda, distinctio!
             </p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-5">
+          <div>
+            <h1 class="h2">
+              {{  product.title }}
+            </h1>
+            <div class="d-flex my-3 align-items-end justify-content-end">
+              <del class="text-muted">售價 ${{  product.origin_price }}</del>
+              <div class="h3 mb-0 ml-auto text-danger">
+                <small>網路價 NT$</small>
+                <strong>{{  product.price }}</strong>
+              </div>
+            </div>
+            <hr />
+            <div class="input-group mt-3">
+              <select name class="form-control mr-1" v-model="product.num">
+                <option :value="num" v-for="num in 5" :key="num">選購 {{ num }} {{ product.unit }}</option>
+              </select>
+              <a href="" class="btn btn-primary" @click.prevent="addToCart(product.id, product.num)">
+                <i class="fa fa-cart-plus" aria-hidden="true"></i> 加入購物車
+              </a>
+            </div>
           </div>
         </div>
       </div>
