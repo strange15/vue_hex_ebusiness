@@ -24,13 +24,8 @@
         required
         v-model="user.password"
       />
-      <div class="checkbox mb-3">
-        <label>
-          <input type="checkbox" value="remember-me" /> Remember me
-        </label>
-      </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
+      <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">Sign in</button>
+      <p class="mt-2 text-muted">&copy; 2020</p>
     </form>
   </div>
 </template>

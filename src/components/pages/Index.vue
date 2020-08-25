@@ -76,7 +76,7 @@
           ON SALE 30% OFF
         </span>
         <button class="enter-btn copy" :data-clipboard-text="couponCode">
-          ENTER
+          COPY COUPON
         </button>
       </div>
     </div>
