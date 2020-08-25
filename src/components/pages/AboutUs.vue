@@ -5,12 +5,12 @@
         關於我們
       </div>
       <div class="description">
+        <img src="../../assets/images/about/about.jpg" alt="">
         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur, quo.</p>
         <P>Lorem ipsum dolor sit amet.</p>
         <P>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
         <P>Lorem ipsum dolor sit amet.</p>
         <P>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae provident soluta expedita?</p>
-        
       </div>
     </div>
   </div>
@@ -47,6 +47,10 @@ export default {
     margin: 1rem 0;
     border-bottom: 1px solid #fff;
     padding-bottom: .5rem;
+
+    img {
+      width: 35rem;
+    }
   }
 }
 </style>
