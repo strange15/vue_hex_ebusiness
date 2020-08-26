@@ -78,12 +78,14 @@
                             v-if="status.itemLoading === prod.id"
                           ></i>
                         </a>
-                        <!-- TODO 加入我的最愛 -->
+                        <el-button :plain="true" @click="addFavAlert">加入願望清單</el-button>
+                        <el-button :plain="true" @click="removeFavAlert">移除願望清單</el-button>
+                        <!-- TODO 加入願望清單 -->
                         <!-- <a
                             class="btn btn-outline-secondary btn-block btn-sm"
                             @click="addToFav({control:'add', data:prod})"
                           >
-                            <i class="fa fa-star" aria-hidden="true"></i> 加入我的最愛
+                            <i class="fa fa-star" aria-hidden="true"></i> 加入願望清單
                         </a>-->
                       </div>
                     </div>
@@ -92,7 +94,7 @@
               </div>
               <div v-else>
                 <div class="row">
-                  <div class="col-md-4 mb-4" v-for="prod in tmpProducts" :key="prod.id">
+                  <div class="col-md-4 mb-4" v-for="prod in tmpPageProducts" :key="prod.id">
                     <div class="card border-0 box-shadow text-center h-100">
                       <router-link :to="{ name: 'Product', params: { pid: prod.id }}">
                         <img class="card-img-top" :src="prod.imageUrl" alt="Card image cap" />
@@ -113,20 +115,27 @@
                             v-if="status.itemLoading === prod.id"
                           ></i>
                         </a>
-                        <!-- TODO 加入我的最愛 -->
+                        <!-- TODO 加入願望清單 -->
+                        <!-- <el-button :plain="true" @click="addFavAlert(prod)">加入願望清單</el-button>
+                        <el-button :plain="true" @click="removeFavAlert">移除願望清單</el-button> -->
                         <!-- <a
                             class="btn btn-outline-secondary btn-block btn-sm"
                             @click="addToFav({control:'add', data:prod})"
                           >
-                            <i class="fa fa-star" aria-hidden="true"></i> 加入我的最愛
+                            <i class="fa fa-star" aria-hidden="true"></i> 加入願望清單
                         </a>-->
                       </div>
                     </div>
                   </div>
                 </div>
+                <el-pagination
+                  background
+                  layout="prev, pager, next"
+                  :page-size="9"
+                  @current-change="nextPage"
+                  :total="totalCount">
+                </el-pagination>
               </div>
-              <!-- pagination -->
-              <!-- <pagination :pagination="pagination" @getProducts="getProducts"></pagination> -->
             </div>
           </div>
         </div>
@@ -136,15 +145,13 @@
 </template>
 
 <script>
-// import Pagination from "../Pagination";
-
 export default {
   data() {
     return {
       active: "all",
-      products: [],
+      products: [], // 所有商品
       categoryTab: [], // 類別
-      tmpProducts: [],
+      tmpProducts: [], // 商品暫存陣列
       filterProducts: [], // 搜尋結果
       searchProd: "", // 搜尋字串
       isFilter: false,
@@ -152,11 +159,12 @@ export default {
       status: {
         itemLoading: "",
       },
-      pagination: {},
-      favorite: [], // 我的最愛
+      totalCount: 0,
+      currentBtnIndex: 0,
+      tmpPageProducts: [], // 商品陣列 for pagination
+      favorite: [], // 願望清單
     };
   },
-  // components: { Pagination },
   methods: {
     getProducts(page = 1) {
       const vm = this;
@@ -165,12 +173,17 @@ export default {
         .get(`${this.API.LIST_ALL_PRODUCTS_NOT_ADMIN}`)
         .then((response) => {
           vm.products = response.data.products;
-          // vm.pagination = response.data.pagination;
-          // TODO 額外用 pagination? element-ui
+          vm.totalCount = vm.products.length;
           vm.filterCategory(vm.products);
           vm.initTab();
           vm.isLoading = false;
         });
+    },
+    nextPage(index) {
+      this.currentBtnIndex = index;
+      let start = 9*(index-1);
+      let end = start + 9;
+      this.tmpPageProducts = this.tmpProducts.slice(start, end);
     },
     /** 切換要顯示的商品類別 */
     changeCategory(tab) {
@@ -179,8 +192,12 @@ export default {
       vm.clearSearch();
       if (tab === "all") {
         vm.tmpProducts = vm.products;
-        // return;
       } else vm.tmpProducts = vm.products.filter((x) => x.category === tab);
+      vm.tmpPageProducts = vm.tmpProducts;
+      vm.totalCount = vm.tmpProducts.length;
+      if( vm.tmpProducts.length > 10 ){
+        vm.tmpPageProducts = vm.tmpProducts.slice(0, 9);
+      }
     },
     /** 整理 categorys */
     filterCategory(categorys) {
@@ -226,7 +243,7 @@ export default {
           vm.status.itemLoading = "";
         });
     },
-    // 加入我的最愛
+    // 加入願望清單
     addToFav(obj) {
       /**
        * obj = {
@@ -236,7 +253,7 @@ export default {
        */
       let vm = this;
       console.log("addToFav", obj);
-      // 新增我的最愛
+      // 新增願望清單
       if (obj.control == "add") {
         this.favorite.push(obj.data);
         // this.location = this.location.filter(function (item, index) {
@@ -249,7 +266,7 @@ export default {
         return;
       }
 
-      // 移除我的最愛
+      // 移除願望清單
       // this.favorite = this.favorite.filter(function (item, index) {
       //   if (item.SiteId == obj.data.SiteId) {
       //     return false;
@@ -257,13 +274,13 @@ export default {
       //   return true;
       // });
 
-      // 如果移除此最愛後, 我的最愛的陣列是空的, 就直接拿原本的資料來 gen
+      // 如果移除此最愛後, 願望清單的陣列是空的, 就直接拿原本的資料來 gen
       // if (this.favorite.length == 0) {
       //   localStorage.clear();
       //   vm.location = vm.data;
       //   return;
       // }
-      // 如果我的最愛的陣列內還有值, 再做篩選
+      // 如果願望清單的陣列內還有值, 再做篩選
       // vm.favorite.forEach(function (star, i) {
       //   vm.location = [...vm.data].filter(function (item, index) {
       //     if (item.SiteId == star.SiteId) return false;
@@ -271,6 +288,20 @@ export default {
       //   });
       // });
       localStorage.setItem("favorite", JSON.stringify(vm.favorite));
+    },
+    addFavAlert(prod) {
+      console.log('prod', prod);
+      this.$message({
+        message: `${prod.title}加入願望清單了！`,
+        type: 'success'
+      });
+    },
+
+    removeFavAlert() {
+      this.$message({
+        message: '警告哦，这是一条警告消息',
+        type: 'warning'
+      });
     },
   },
   created() {
@@ -322,6 +353,14 @@ export default {
   .btn-outline-secondary:hover {
     background-color: #202f95 !important;
     color: #fff;
+  }
+
+  .el-pagination {
+      margin-bottom: 1rem;
+  }
+  .el-pagination.is-background .el-pager li:not(.disabled).active {
+      background-color: #022d6d;
+      color: #FFF;
   }
 
   .bold {
