@@ -49,6 +49,7 @@ new Vue({
 });
 
 router.beforeEach((to, from, next) => {
+  // TODO 判斷連線
 
   // 判斷是否需要驗證
   if (to.meta.requiresAuth) {

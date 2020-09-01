@@ -78,15 +78,10 @@
                             v-if="status.itemLoading === prod.id"
                           ></i>
                         </a>
-                        <el-button :plain="true" @click="addFavAlert">加入願望清單</el-button>
-                        <el-button :plain="true" @click="removeFavAlert">移除願望清單</el-button>
-                        <!-- TODO 加入願望清單 -->
-                        <!-- <a
-                            class="btn btn-outline-secondary btn-block btn-sm"
-                            @click="addToFav({control:'add', data:prod})"
-                          >
-                            <i class="fa fa-star" aria-hidden="true"></i> 加入願望清單
-                        </a>-->
+                        <el-button class="btn btn-outline-secondary btn-block btn-sm" :plain="true" v-if="!prod.isFavorite"
+                          @click="favControl({control:'add', data: prod})">加入願望清單</el-button>
+                        <el-button class="btn btn-outline-secondary btn-block btn-sm btn-remove" :plain="true" v-if="prod.isFavorite"
+                          @click="favControl({control:'remove', data: prod})">移除願望清單</el-button>
                       </div>
                     </div>
                   </div>
@@ -115,15 +110,10 @@
                             v-if="status.itemLoading === prod.id"
                           ></i>
                         </a>
-                        <!-- TODO 加入願望清單 -->
-                        <!-- <el-button :plain="true" @click="addFavAlert(prod)">加入願望清單</el-button>
-                        <el-button :plain="true" @click="removeFavAlert">移除願望清單</el-button> -->
-                        <!-- <a
-                            class="btn btn-outline-secondary btn-block btn-sm"
-                            @click="addToFav({control:'add', data:prod})"
-                          >
-                            <i class="fa fa-star" aria-hidden="true"></i> 加入願望清單
-                        </a>-->
+                        <el-button class="btn btn-outline-secondary btn-block btn-sm" :plain="true" v-if="!prod.isFavorite"
+                          @click="favControl({control:'add', data: prod})">加入願望清單</el-button>
+                        <el-button class="btn btn-outline-secondary btn-block btn-sm btn-remove" :plain="true" v-if="prod.isFavorite"
+                          @click="favControl({control:'remove', data: prod})">移除願望清單</el-button>
                       </div>
                     </div>
                   </div>
@@ -195,6 +185,7 @@ export default {
       } else vm.tmpProducts = vm.products.filter((x) => x.category === tab);
       vm.tmpPageProducts = vm.tmpProducts;
       vm.totalCount = vm.tmpProducts.length;
+      vm.initFav(vm.tmpPageProducts);
       if( vm.tmpProducts.length > 10 ){
         vm.tmpPageProducts = vm.tmpProducts.slice(0, 9);
       }
@@ -216,7 +207,10 @@ export default {
       let filterWords = this.searchProd;
       if (filterWords === "") { vm.isFilter = false; return; }
       vm.filterProducts = vm.tmpProducts.filter((x) => x.title.indexOf(filterWords) > -1);
-      if (vm.filterProducts.length !== 0) vm.isFilter = true;
+      if (vm.filterProducts.length !== 0) {
+        vm.isFilter = true;
+        vm.initFav(vm.filterProducts);
+      }
       else{
         vm.$alert('請嘗試其他關鍵字', '搜尋不到此項產品', {
           confirmButtonText: '確定',
@@ -227,6 +221,9 @@ export default {
     clearSearch() {
       this.isFilter = false;
       this.searchProd = "";
+      // 清除完以後做初始化
+      this.initFav(this.tmpPageProducts);
+      this.nextPage(1);
     },
     // 加入購物車
     addToCart(id, qty = 1) {
@@ -243,64 +240,39 @@ export default {
           vm.status.itemLoading = "";
         });
     },
-    // 加入願望清單
-    addToFav(obj) {
+    // 初始化/更新 願望清單
+    initFav(products) {
+      let vm = this;
+      try {
+        vm.favorite = JSON.parse(localStorage["favorite"]);
+      } catch(e) {
+        localStorage.setItem("favorite", []);
+      }
+      if( vm.favorite.length !== 0 ) {
+        products.forEach(function(x){ vm.$set(x, 'isFavorite', vm.favorite.indexOf(x.id) > -1) });
+      }
+    },
+    // 願望清單控制
+    favControl(obj) {
       /**
        * obj = {
        *  control:'remove' or 'add',
-       * data:prod,
+       *  data:prod,
        * }
        */
       let vm = this;
-      console.log("addToFav", obj);
-      // 新增願望清單
-      if (obj.control == "add") {
-        this.favorite.push(obj.data);
-        // this.location = this.location.filter(function (item, index) {
-        //   if (item.SiteId == obj.data.SiteId) {
-        //     return false;
-        //   }
-        //   return true;
-        // });
-        localStorage.setItem("favorite", JSON.stringify(this.favorite));
-        return;
+      let alertType = obj.control === 'add' ? 'success' : 'warning';
+      let msg = obj.control === 'add' ? `將 ${obj.data.title} 加入願望清單了！` : `將 ${obj.data.title} 移除願望清單了！`;
+      if (obj.control === "add") { // 新增願望清單
+        vm.favorite.push(obj.data.id);
+      }else{ // 移除願望清單
+        vm.favorite.splice(vm.favorite.indexOf(obj.data.id), 1);
       }
-
-      // 移除願望清單
-      // this.favorite = this.favorite.filter(function (item, index) {
-      //   if (item.SiteId == obj.data.SiteId) {
-      //     return false;
-      //   }
-      //   return true;
-      // });
-
-      // 如果移除此最愛後, 願望清單的陣列是空的, 就直接拿原本的資料來 gen
-      // if (this.favorite.length == 0) {
-      //   localStorage.clear();
-      //   vm.location = vm.data;
-      //   return;
-      // }
-      // 如果願望清單的陣列內還有值, 再做篩選
-      // vm.favorite.forEach(function (star, i) {
-      //   vm.location = [...vm.data].filter(function (item, index) {
-      //     if (item.SiteId == star.SiteId) return false;
-      //     return true;
-      //   });
-      // });
       localStorage.setItem("favorite", JSON.stringify(vm.favorite));
-    },
-    addFavAlert(prod) {
-      console.log('prod', prod);
-      this.$message({
-        message: `${prod.title}加入願望清單了！`,
-        type: 'success'
-      });
-    },
-
-    removeFavAlert() {
-      this.$message({
-        message: '警告哦，这是一条警告消息',
-        type: 'warning'
+      vm.initFav(vm.isFilter ? vm.filterProducts : vm.tmpPageProducts);
+      vm.$message({
+        message: msg,
+        type: alertType
       });
     },
   },
@@ -372,6 +344,11 @@ export default {
     right: 6.5rem;
     top: 50%;
     transform: translateY(-50%);
+  }
+
+  .btn-remove {
+    background: #eee;
+    border-color: #c5c5c5;
   }
 }
 </style>

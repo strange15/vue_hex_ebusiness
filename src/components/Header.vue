@@ -9,7 +9,6 @@
       <router-link class="link" to="/CheckoutOrder">查看訂單</router-link>
       <router-link class="link" to="/ProductsList">所有商品</router-link>
       <router-link class="link" to="/admin">管理員後台</router-link>
-      <!-- TODO 如果不是放 header, 改放 home, 能否解決 modal 不出現(被蓋住?)的 bug -->
       <shopping-cart></shopping-cart>
     </div>
   </div>
