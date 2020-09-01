@@ -9,6 +9,7 @@
       <router-link class="link" to="/CheckoutOrder">查看訂單</router-link>
       <router-link class="link" to="/ProductsList">所有商品</router-link>
       <router-link class="link" to="/admin">管理員後台</router-link>
+      <router-link class="link" to="/FavoriteList"><i class="far fa-heart heart"></i></router-link>
       <shopping-cart></shopping-cart>
     </div>
   </div>
@@ -72,6 +73,10 @@ export default {
     color: #000;
     text-decoration: none;
     margin-right: 2rem;
+  }
+
+  .heart {
+    font-size: 1.5rem;
   }
 }
 .fixed-header {

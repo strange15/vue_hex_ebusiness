@@ -10,6 +10,7 @@ import CustomerCheckout from "@/components/pages/CustomerCheckout";
 import Home from "@/components/Home";
 import Index from "@/components/pages/Index";
 import AboutUs from "@/components/pages/AboutUs";
+import FavoriteList from "@/components/pages/FavoriteList";
 import CheckoutOrder from "@/components/pages/CheckoutOrder";
 import ProductsList from "@/components/pages/ProductsList";
 import Product from "@/components/pages/Product";
@@ -101,6 +102,11 @@ export default new Router({
           path: "checkout_step3/:orderId",
           name: "CheckoutStep3",
           component: CheckoutStep3,
+        },
+        {
+          path: "FavoriteList",
+          name: "FavoriteList",
+          component: FavoriteList,
         },
       ]
     },
