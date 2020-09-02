@@ -4,7 +4,7 @@
       <loading :active.sync="isLoading"></loading>
     </div>
 
-    <div class="container main-content mb-1">
+    <div class="ProductsList-container container main-content mb-1">
       <div class="row">
         <div class="col-md-3">
           <!-- 左側選單 (List group) -->
@@ -78,10 +78,22 @@
                             v-if="status.itemLoading === prod.id"
                           ></i>
                         </a>
-                        <el-button class="btn btn-outline-secondary btn-block btn-sm" :plain="true" v-if="!prod.isFavorite"
-                          @click="favControl({control:'add', data: prod})"><i class="far fa-heart"></i>加入願望清單</el-button>
-                        <el-button class="btn btn-outline-secondary btn-block btn-sm btn-remove" :plain="true" v-if="prod.isFavorite"
-                          @click="favControl({control:'remove', data: prod})"><i class="fas fa-heart"></i>移除願望清單</el-button>
+                        <el-button
+                          class="btn btn-outline-secondary btn-block btn-sm"
+                          :plain="true"
+                          v-if="!prod.isFavorite"
+                          @click="favControl({control:'add', data: prod})"
+                        >
+                          <i class="far fa-heart"></i>加入願望清單
+                        </el-button>
+                        <el-button
+                          class="btn btn-outline-secondary btn-block btn-sm btn-remove"
+                          :plain="true"
+                          v-if="prod.isFavorite"
+                          @click="favControl({control:'remove', data: prod})"
+                        >
+                          <i class="fas fa-heart"></i>移除願望清單
+                        </el-button>
                       </div>
                     </div>
                   </div>
@@ -110,10 +122,22 @@
                             v-if="status.itemLoading === prod.id"
                           ></i>
                         </a>
-                        <el-button class="btn btn-outline-secondary btn-block btn-sm" :plain="true" v-if="!prod.isFavorite"
-                          @click="favControl({control:'add', data: prod})"><i class="far fa-heart"></i>加入願望清單</el-button>
-                        <el-button class="btn btn-outline-secondary btn-block btn-sm btn-remove" :plain="true" v-if="prod.isFavorite"
-                          @click="favControl({control:'remove', data: prod})"><i class="fas fa-heart"></i>移除願望清單</el-button>
+                        <el-button
+                          class="btn btn-outline-secondary btn-block btn-sm"
+                          :plain="true"
+                          v-if="!prod.isFavorite"
+                          @click="favControl({control:'add', data: prod})"
+                        >
+                          <i class="far fa-heart"></i>加入願望清單
+                        </el-button>
+                        <el-button
+                          class="btn btn-outline-secondary btn-block btn-sm btn-remove"
+                          :plain="true"
+                          v-if="prod.isFavorite"
+                          @click="favControl({control:'remove', data: prod})"
+                        >
+                          <i class="fas fa-heart"></i>移除願望清單
+                        </el-button>
                       </div>
                     </div>
                   </div>
@@ -123,8 +147,8 @@
                   layout="prev, pager, next"
                   :page-size="9"
                   @current-change="nextPage"
-                  :total="totalCount">
-                </el-pagination>
+                  :total="totalCount"
+                ></el-pagination>
               </div>
             </div>
           </div>
@@ -171,7 +195,7 @@ export default {
     },
     nextPage(index) {
       this.currentBtnIndex = index;
-      let start = 9*(index-1);
+      let start = 9 * (index - 1);
       let end = start + 9;
       this.tmpPageProducts = this.tmpProducts.slice(start, end);
     },
@@ -186,7 +210,7 @@ export default {
       vm.tmpPageProducts = vm.tmpProducts;
       vm.totalCount = vm.tmpProducts.length;
       vm.initFav(vm.tmpPageProducts);
-      if( vm.tmpProducts.length > 10 ){
+      if (vm.tmpProducts.length > 10) {
         vm.tmpPageProducts = vm.tmpProducts.slice(0, 9);
       }
     },
@@ -205,15 +229,19 @@ export default {
     searchProducts() {
       let vm = this;
       let filterWords = this.searchProd;
-      if (filterWords === "") { vm.isFilter = false; return; }
-      vm.filterProducts = vm.tmpProducts.filter((x) => x.title.indexOf(filterWords) > -1);
+      if (filterWords === "") {
+        vm.isFilter = false;
+        return;
+      }
+      vm.filterProducts = vm.tmpProducts.filter(
+        (x) => x.title.indexOf(filterWords) > -1
+      );
       if (vm.filterProducts.length !== 0) {
         vm.isFilter = true;
         vm.initFav(vm.filterProducts);
-      }
-      else{
-        vm.$alert('請嘗試其他關鍵字', '搜尋不到此項產品', {
-          confirmButtonText: '確定',
+      } else {
+        vm.$alert("請嘗試其他關鍵字", "搜尋不到此項產品", {
+          confirmButtonText: "確定",
         });
       }
     },
@@ -245,11 +273,13 @@ export default {
       let vm = this;
       try {
         vm.favorite = JSON.parse(localStorage["favorite"]);
-      } catch(e) {
+      } catch (e) {
         localStorage.setItem("favorite", []);
       }
-      if( vm.favorite.length !== 0 ) {
-        products.forEach(function(x){ vm.$set(x, 'isFavorite', vm.favorite.indexOf(x.id) > -1) });
+      if (vm.favorite.length !== 0) {
+        products.forEach(function (x) {
+          vm.$set(x, "isFavorite", vm.favorite.indexOf(x.id) > -1);
+        });
       }
     },
     // 願望清單控制
@@ -261,18 +291,23 @@ export default {
        * }
        */
       let vm = this;
-      let alertType = obj.control === 'add' ? 'success' : 'warning';
-      let msg = obj.control === 'add' ? `將 ${obj.data.title} 加入願望清單了！` : `將 ${obj.data.title} 移除願望清單了！`;
-      if (obj.control === "add") { // 新增願望清單
+      let alertType = obj.control === "add" ? "success" : "warning";
+      let msg =
+        obj.control === "add"
+          ? `將 ${obj.data.title} 加入願望清單了！`
+          : `將 ${obj.data.title} 移除願望清單了！`;
+      if (obj.control === "add") {
+        // 新增願望清單
         vm.favorite.push(obj.data.id);
-      }else{ // 移除願望清單
+      } else {
+        // 移除願望清單
         vm.favorite.splice(vm.favorite.indexOf(obj.data.id), 1);
       }
       localStorage.setItem("favorite", JSON.stringify(vm.favorite));
       vm.initFav(vm.isFilter ? vm.filterProducts : vm.tmpPageProducts);
       vm.$message({
         message: msg,
-        type: alertType
+        type: alertType,
       });
     },
   },
@@ -283,7 +318,7 @@ export default {
 };
 </script>
 <style lang="less" scope>
-.container {
+.ProductsList-container {
   margin-top: 10rem;
 
   .category-group {
@@ -328,11 +363,11 @@ export default {
   }
 
   .el-pagination {
-      margin-bottom: 1rem;
+    margin-bottom: 1rem;
   }
   .el-pagination.is-background .el-pager li:not(.disabled).active {
-      background-color: #022d6d;
-      color: #FFF;
+    background-color: #022d6d;
+    color: #fff;
   }
 
   .bold {
