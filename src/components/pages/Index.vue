@@ -163,9 +163,7 @@ export default {
     this.initClipboard();
   },
   computed: {},
-  mounted() {
-     
-  }
+  mounted() {}
 };
 </script>
 <style lang="scss" scoped>
