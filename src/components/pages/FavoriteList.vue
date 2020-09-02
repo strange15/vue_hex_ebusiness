@@ -12,7 +12,12 @@
               您的願望清單
             </label>
           </div>
-          <div class="tab-content">
+          <div v-if="tmpPageProducts.length === 0">
+            <label class="h5 text-left order">
+              還沒有商品加入願望清單！
+            </label>
+          </div>
+          <div class="tab-content" v-else>
             <div class>
               <div class="row">
                 <div class="col-md-4 mb-4" v-for="prod in tmpPageProducts" :key="prod.id">
@@ -140,7 +145,10 @@ export default {
         );
         vm.totalCount = vm.tmpProducts.length;
         vm.tmpPageProducts = vm.tmpProducts.slice(0, 9);
+
+        return;
       }
+      vm.tmpPageProducts = [];
     },
     // 願望清單控制
     favControl(obj) {
