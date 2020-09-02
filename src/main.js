@@ -18,6 +18,7 @@ import date from './filters/date';
 import API from '../src/assets/js/api';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import { Message } from 'element-ui';
 
 /** test owl-carousel */
 // import 'owl.carousel';
@@ -49,8 +50,13 @@ new Vue({
 });
 
 router.beforeEach((to, from, next) => {
-  // TODO 判斷連線
-
+  if( !navigator.onLine ){
+    Message({
+      message: "偵測到沒有網路連線！請確認後重試。",
+      type: "error",
+    });
+    return;
+  }
   // 判斷是否需要驗證
   if (to.meta.requiresAuth) {
     axios.post(API.CHECK_IS_LOGIN).then(response => {
