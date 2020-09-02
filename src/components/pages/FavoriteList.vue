@@ -39,7 +39,7 @@
                       <el-button
                         class="btn btn-outline-secondary btn-block btn-sm btn-remove"
                         :plain="true"
-                        @click="favControl({control:'remove', data: prod, show: true})"
+                        @click="favControl({data: prod, show: true})"
                       >
                         <i class="fas fa-heart"></i>移除願望清單
                       </el-button>
@@ -112,7 +112,7 @@ export default {
         .then((response) => {
           if(response.data.success){
             this.$bus.$emit("shoppingcart:get");
-            vm.favControl({control:'remove',data:prod,show: false});
+            vm.favControl({data:prod, show: false});
             vm.$message({
               message: `${prod.title}加入購物車囉！`,
               type: "success",
@@ -146,30 +146,18 @@ export default {
     favControl(obj) {
       /**
        * obj = {
-       *  control:'remove' or 'add',
        *  data:prod,
        *  show: true
        * }
        */
       let vm = this;
-      let alertType = obj.control === "add" ? "success" : "warning";
-      let msg =
-        obj.control === "add"
-          ? `將 ${obj.data.title} 加入願望清單了！`
-          : `將 ${obj.data.title} 移除願望清單了！`;
-      if (obj.control === "add") {
-        // 新增願望清單
-        vm.favorite.push(obj.data.id);
-      } else {
-        // 移除願望清單
-        vm.favorite.splice(vm.favorite.indexOf(obj.data.id), 1);
-      }
+      vm.favorite.splice(vm.favorite.indexOf(obj.data.id), 1); // 移除願望清單
       localStorage.setItem("favorite", JSON.stringify(vm.favorite));
       vm.initFav(vm.products);
       if( obj.show ){
         vm.$message({
-          message: msg,
-          type: alertType,
+          message: `將 ${obj.data.title} 移除願望清單了！`,
+          type: "warning",
         });
       }
     },
