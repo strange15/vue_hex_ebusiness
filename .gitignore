@@ -1,6 +1,7 @@
 .DS_Store
 node_modules/
-# /dist/
+/dist/ 
+# 如果要使用 Github Page, 就把 /dist/ 註解
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
