@@ -22,7 +22,7 @@
     "popper.js": "^1.16.1",
     "slick-carousel": "^1.8.1",
     "style-loader": "^1.2.1",
-    "swiper": "^3.4.2",
+    "swiper": "^6.5.1",
     "vee-validate": "^2.2.15",
     "vue": "^2.5.2",
     "vue-awesome-swiper": "^4.1.1",
